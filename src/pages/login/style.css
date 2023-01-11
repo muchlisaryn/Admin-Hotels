@@ -1,0 +1,41 @@
+.login {
+  background-image: url("../../asset/img/background.png");
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.card-login {
+  border: 1px solid #aeaeae;
+  background-color: white;
+  padding: 30px;
+  border-radius: 20px;
+  width: 300px;
+  height: 300px;
+}
+
+.login input {
+  width: 100%;
+  margin: 1px 0;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid grey;
+  outline: none;
+}
+
+.login input:focus {
+  border: 2px solid #0364ce;
+}
+
+.login input::placeholder {
+  opacity: 0.4;
+  padding-left: 5px;
+  font-size: 12px;
+  text-justify: "center";
+}
+
+.title {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
