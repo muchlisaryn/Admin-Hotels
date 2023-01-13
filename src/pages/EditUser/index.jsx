@@ -1,19 +1,29 @@
+import axios from "axios";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button, Sidebar } from "../../component";
 import { colors } from "../../utils/colors";
 import "./style.css";
 
 export default function EditUser() {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [username, setUsername] = useState();
-  const [firstName, setFirstName] = useState();
-  const [lastName, setLastName] = useState();
-  const [telephone, setTelephone] = useState();
-  const [role, setRole] = useState("user");
-  const [photo, setPhoto] = useState();
+  const { id } = useParams();
+  const users = useSelector((state) => state.user.users);
+  const navigate = useNavigate();
 
+  let filter = users.filter((person) => person._id === id);
+
+  const [email, setEmail] = useState(filter[0]?.email);
+  const [password, setPassword] = useState(filter[0]?.password);
+  const [username, setUsername] = useState(filter[0]?.username);
+  const [firstName, setFirstName] = useState(filter[0]?.firstName);
+  const [lastName, setLastName] = useState(filter[0]?.lastName);
+  const [telephone, setTelephone] = useState(filter[0]?.telephone);
+  const [role, setRole] = useState(filter[0]?.role);
+  const [photo, setPhoto] = useState();
+  const [showEye, setShowEye] = useState();
+
+  console.log(telephone);
   const roles = [
     {
       name: "User",
@@ -44,7 +54,20 @@ export default function EditUser() {
     setPhoto(null);
   };
 
-  console.log(photo);
+  const edit = () => {
+    axios.put(`http://localhost:8000/api/v1/cms/users/${id}`, {
+      email: email,
+      firstName: firstName,
+      image: photo,
+      lastName: lastName,
+      password: password,
+      role: role,
+      telephone: telephone,
+      username: username,
+    });
+    navigate("/user");
+  };
+
   return (
     <div className="d-flex ">
       <Sidebar />
@@ -151,6 +174,7 @@ export default function EditUser() {
                   color={colors.blue}
                   height={10}
                   marginRight={5}
+                  onClick={edit}
                 />
                 <Button title="Clear" height={10} onClick={clear} />
               </div>

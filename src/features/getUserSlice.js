@@ -8,10 +8,21 @@ const initialState = {
   error: "",
 };
 
-export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
+export const fetchUsers = createAsyncThunk("users/fetchUsers", async (API) => {
   try {
-    const response = await axios.get(`http://localhost:8000/api/v1/cms/users`);
+    const response = await axios.get(API);
     return response.data.data;
+  } catch (e) {
+    throw e;
+  }
+});
+
+export const deleteUsers = createAsyncThunk("users/deleteUsers", async (id) => {
+  try {
+    const response = await axios.delete(
+      `http://localhost:8000/api/v1/cms/users/${id}`
+    );
+    return response;
   } catch (e) {
     throw e;
   }

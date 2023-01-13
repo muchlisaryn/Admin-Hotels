@@ -1,13 +1,19 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button, Sidebar } from "../../component";
+import { deleteUsers, fetchUsers } from "../../features/getUserSlice";
 import { colors } from "../../utils/colors";
 
 export default function AdminUser() {
-  const users = useSelector((state) => state.users.users);
-  console.log("users", users);
+  const users = useSelector((state) => state.user.users);
+  const loading = useSelector((state) => state.user.pending);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUsers(`http://localhost:8000/api/v1/cms/users`));
+  }, []);
 
   return (
     <div className="d-flex ">
@@ -32,25 +38,35 @@ export default function AdminUser() {
               <th scope="col">actions</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>User</td>
-              <td>muchlis12</td>
-              <td>muchlisar68@gmail.com</td>
-              <td>081310750099</td>
-              <td className="d-flex">
-                <div className="me-2">
-                  <Link to="/user/edit-user/:id">
-                    <Button title="edit" color={colors.yellow} />
-                  </Link>
-                </div>
-                <div>
-                  <Button title="Hapus" color={colors.blue} />
-                </div>
-              </td>
-            </tr>
-          </tbody>
+          {loading ? (
+            <div>Loading...</div>
+          ) : (
+            <tbody>
+              {users?.map((item) => (
+                <tr key={item._id}>
+                  <th scope="row">1</th>
+                  <td>{item?.role}</td>
+                  <td>{item?.username}</td>
+                  <td>{item?.email}</td>
+                  <td>{item?.telephone}</td>
+                  <td className="d-flex">
+                    <div className="me-2">
+                      <Link to={`/user/edit-user/${item._id}`}>
+                        <Button title="edit" color={colors.yellow} />
+                      </Link>
+                    </div>
+                    <div>
+                      <Button
+                        title="Hapus"
+                        color={colors.blue}
+                        onClick={() => dispatch(deleteUsers(item._id))}
+                      />
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          )}
         </table>
       </div>
     </div>

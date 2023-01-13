@@ -8,8 +8,6 @@ import { useState } from "react";
 
 export default function AdminHotel() {
   const [verifikasi, setVerifikasi] = useState("Belum diverifikasi");
-  const users = useSelector((state) => state.users.users);
-  console.log("users", users);
 
   const openPayment = () => {
     Swal.fire({
@@ -32,7 +30,7 @@ export default function AdminHotel() {
             </Link>
           </div>
         </div>
-        <table class="table">
+        <table class="table-transactions table">
           <thead>
             <tr>
               <th scope="col">No transactions</th>
@@ -47,7 +45,7 @@ export default function AdminHotel() {
           <tbody>
             <tr>
               <th scope="row">1</th>
-              <td>Muchlis Aryana</td>
+              <td>Muchlis Aryana </td>
               <td style={{ maxWidth: 82 }}>
                 12 Desember 2022 - 14 Desember 2022 (2 Day)
               </td>
@@ -60,7 +58,7 @@ export default function AdminHotel() {
               <td className="d-flex" style={{ height: 70 }}>
                 <div className="me-2">
                   <Link to="/user/edit-user/:id">
-                    <Button title="Verifikasi" color={colors.yellow} />
+                    <Button title="Accept" color={colors.yellow} />
                   </Link>
                 </div>
               </td>

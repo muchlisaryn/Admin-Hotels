@@ -49,21 +49,32 @@ export default function CreateUser() {
   const Create = (e) => {
     e.preventDefault();
 
-    let formdata = new FormData();
+    // let formdata = new FormData();
 
-    formdata.append("email", email);
-    formdata.append("username", username);
-    formdata.append("firstName", firstName);
-    formdata.append("lastName", lastName);
-    formdata.append("password", password);
-    formdata.append("telephone", telephone);
-    formdata.append("image", photo);
+    // formdata.append("email", email);
+    // formdata.append("username", username);
+    // formdata.append("firstName", firstName);
+    // formdata.append("lastName", lastName);
+    // formdata.append("password", password);
+    // formdata.append("telephone", telephone);
+    // formdata.append("image", photo);
 
-    axios({
-      url: "http://localhost:8000/api/v1/cms/users",
-      method: "POST",
-      data: formdata,
-    })
+    // axios({
+    //   url: "http://localhost:8000/api/v1/cms/users",
+    //   method: "POST",
+    //   data: formdata,
+    // })
+
+    axios
+      .post("http://localhost:8000/api/v1/cms/users", {
+        email: email,
+        username: username,
+        firstName: firstName,
+        lastName: lastName,
+        password: lastName,
+        telephone: telephone,
+        photo: photo,
+      })
       .then((res) => {
         console.log(res);
       })
@@ -85,7 +96,7 @@ export default function CreateUser() {
           </div>
         </div>
         <div className="edit">
-          <form>
+          <form method="POST">
             {role === "Admin Hotel" ? (
               <div className="form-group d-flex  ">
                 <div className="me-2" style={{ width: 100 }}>
