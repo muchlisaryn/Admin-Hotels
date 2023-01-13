@@ -7,18 +7,20 @@ export default function Button({
   children,
   height,
   fontSize,
+  marginRight,
 }) {
   return (
     <button
       onClick={onClick}
       style={{
-        backgroundColor: color === colors.blue ? colors.blue : colors.yellow,
+        backgroundColor: color,
         color: color === colors.blue ? colors.white : colors.blue,
         width: "100%",
         border: "none",
         borderRadius: 5,
         padding: height,
         fontSize: fontSize,
+        marginRight: marginRight,
       }}
     >
       {children} {title}
