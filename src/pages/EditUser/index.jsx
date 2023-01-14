@@ -160,6 +160,7 @@ export default function EditUser() {
               <select
                 name="cars"
                 id="cars"
+                value={role}
                 onChange={(e) => setRole(e.target.value)}
               >
                 {roles?.map((item) => (

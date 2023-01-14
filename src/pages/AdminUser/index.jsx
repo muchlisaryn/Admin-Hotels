@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button, Sidebar } from "../../component";
-import { deleteUsers, fetchUsers } from "../../features/getUserSlice";
+import { fetchUsers } from "../../features/getUserSlice";
+import Swal from "sweetalert2";
 import { colors } from "../../utils/colors";
 
 export default function AdminUser() {
@@ -14,6 +15,23 @@ export default function AdminUser() {
   useEffect(() => {
     dispatch(fetchUsers(`http://localhost:8000/api/v1/cms/users`));
   }, []);
+
+  const delteUser = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.delete(`http://localhost:8000/api/v1/cms/users/${id}`);
+        window.location.reload(false);
+      }
+    });
+  };
 
   return (
     <div className="d-flex ">
@@ -59,7 +77,7 @@ export default function AdminUser() {
                       <Button
                         title="Hapus"
                         color={colors.blue}
-                        onClick={() => dispatch(deleteUsers(item._id))}
+                        onClick={() => delteUser(item._id)}
                       />
                     </div>
                   </td>

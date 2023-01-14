@@ -17,17 +17,6 @@ export const fetchUsers = createAsyncThunk("users/fetchUsers", async (API) => {
   }
 });
 
-export const deleteUsers = createAsyncThunk("users/deleteUsers", async (id) => {
-  try {
-    const response = await axios.delete(
-      `http://localhost:8000/api/v1/cms/users/${id}`
-    );
-    return response;
-  } catch (e) {
-    throw e;
-  }
-});
-
 const usersSlice = createSlice({
   name: "users",
   initialState,

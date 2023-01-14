@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Sidebar } from "../../component";
 import { colors } from "../../utils/colors";
 import "./style.css";
@@ -15,6 +15,9 @@ export default function CreateUser() {
   const [telephone, setTelephone] = useState();
   const [role, setRole] = useState("user");
   const [photo, setPhoto] = useState();
+  const [messageError, setMessageError] = useState("");
+
+  const navigate = useNavigate();
 
   const roles = [
     {
@@ -46,25 +49,7 @@ export default function CreateUser() {
     setPhoto(null);
   };
 
-  const Create = (e) => {
-    e.preventDefault();
-
-    // let formdata = new FormData();
-
-    // formdata.append("email", email);
-    // formdata.append("username", username);
-    // formdata.append("firstName", firstName);
-    // formdata.append("lastName", lastName);
-    // formdata.append("password", password);
-    // formdata.append("telephone", telephone);
-    // formdata.append("image", photo);
-
-    // axios({
-    //   url: "http://localhost:8000/api/v1/cms/users",
-    //   method: "POST",
-    //   data: formdata,
-    // })
-
+  const Create = () => {
     axios
       .post("http://localhost:8000/api/v1/cms/users", {
         email: email,
@@ -73,14 +58,18 @@ export default function CreateUser() {
         lastName: lastName,
         password: lastName,
         telephone: telephone,
-        photo: photo,
+        image: photo,
+        role: role,
       })
       .then((res) => {
         console.log(res);
       })
       .catch((err) => {
         console.log(err);
+        setMessageError(err.response.data.msg);
       });
+
+    navigate("/user");
   };
 
   return (
@@ -121,6 +110,11 @@ export default function CreateUser() {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
+            {messageError === "Email Sudah Terdaftar" ? (
+              <p style={{ marginLeft: 97, color: "red" }}>{messageError}</p>
+            ) : (
+              <></>
+            )}
 
             <div className="form-group d-flex">
               <div className="me-2" style={{ width: 100 }}>
@@ -172,6 +166,11 @@ export default function CreateUser() {
                 onChange={(e) => setTelephone(e.target.value)}
               />
             </div>
+            {messageError === "Telephone harus diisi" ? (
+              <p style={{ marginLeft: 97, color: "red" }}>{messageError}</p>
+            ) : (
+              <></>
+            )}
             <div className="form-group d-flex">
               <div className="me-2" style={{ width: 100 }}>
                 Photo
