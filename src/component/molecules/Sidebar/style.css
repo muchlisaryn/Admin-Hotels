@@ -2,3 +2,16 @@
   border-right: 1px solid #aeaeae;
   height: 100vh;
 }
+
+.menu-item {
+  text-align: center;
+  padding: 10px;
+  margin-top: 10px;
+  border-top: 1px solid #0364ce;
+  border-bottom: 1px solid #0364ce;
+}
+
+.menu-item:hover {
+  background-color: #0364ce;
+  color: white;
+}

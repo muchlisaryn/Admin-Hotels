@@ -10,8 +10,10 @@ export default function Sidebar() {
         <div style={{ padding: 20 }}>
           <Logo size={150} />
         </div>
-        <div className="align-item-end">Logout</div>
-        <button>Logout</button>
+
+        <div className="menu-item">Pemesanan</div>
+        <div className="menu-item">Pemesanan</div>
+        <div className="menu-item">Pemesanan</div>
       </div>
     </div>
   );

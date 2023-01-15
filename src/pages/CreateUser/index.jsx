@@ -38,7 +38,8 @@ export default function CreateUser() {
     },
   ];
 
-  const clear = () => {
+  const clear = (e) => {
+    e.preventDefault();
     setEmail("");
     setPassword("");
     setUsername("");
@@ -49,27 +50,57 @@ export default function CreateUser() {
     setPhoto(null);
   };
 
-  const Create = () => {
-    axios
-      .post("http://localhost:8000/api/v1/cms/users", {
-        email: email,
-        username: username,
-        firstName: firstName,
-        lastName: lastName,
-        password: lastName,
-        telephone: telephone,
-        image: photo,
-        role: role,
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-        setMessageError(err.response.data.msg);
-      });
+  const uploadImage = async (file) => {
+    let formData = new FormData();
+    formData.append("avatar", file);
+    const res = await axios.post(
+      "http://localhost:8000/api/v1/cms/images",
+      formData,
+      true
+    );
+    return res;
+  };
 
-    navigate("/user");
+  const handleChange = async (e) => {
+    if (e.target.name === "avatar") {
+      if (
+        e?.target?.files[0].type === "image/jpg" ||
+        e?.target?.files[0].type === "image/png" ||
+        e?.target?.files[0].type === "image/jpeg"
+      ) {
+        var size = parseFloat(e.target.files[0].size / 3145728).toFixed(2);
+
+        if (size > 2) {
+          alert("please select image size less than 3 MB");
+        } else {
+          const res = await uploadImage(e.target.files[0]);
+          setPhoto(res.data.data._id);
+        }
+      } else {
+        alert("Please input Image format PNG | JPG | JPEG");
+      }
+    }
+  };
+
+  const Create = async (e) => {
+    e.preventDefault();
+
+    const res = await axios.post("http://localhost:8000/api/v1/cms/users", {
+      email: email,
+      username: username,
+      firstName: firstName,
+      lastName: lastName,
+      password: lastName,
+      telephone: telephone,
+      image: photo,
+      role: role,
+    });
+    if (res.data.data) {
+      console.log("berhasil");
+      navigate("/user");
+    } else {
+      console.log(res.response.data.msg);
+    }
   };
 
   return (
@@ -177,8 +208,9 @@ export default function CreateUser() {
               </div>
               <input
                 type="file"
-                onChange={(e) => setPhoto(e.target.value)}
-                value={photo}
+                onChange={handleChange}
+                label={"avatar"}
+                name="avatar"
               />
             </div>
             <div className="form-group d-flex">

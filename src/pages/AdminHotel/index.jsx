@@ -9,9 +9,9 @@ import { useState } from "react";
 export default function AdminHotel() {
   const [verifikasi, setVerifikasi] = useState("Belum diverifikasi");
 
-  const openPayment = () => {
+  const openPayment = (image) => {
     Swal.fire({
-      imageUrl: "https://placeholder.pics/svg/300x1500",
+      imageUrl: "http://localhost:8000/uploads/57348131-LOGO-_PDIP.svg.png",
       imageHeight: 300,
       imageWidth: 300,
       imageAlt: "A tall image",
@@ -22,15 +22,15 @@ export default function AdminHotel() {
     <div className="d-flex ">
       <Sidebar />
       <div className="w-100 p-3">
-        <div className="d-flex justify-content-between border-bottom pb-3">
-          <div>Wellcome Admin Budi</div>
+        <div className="d-flex justify-content-between border-bottom pb-2 mb-2">
+          <div>Hello Admin Muchlis </div>
           <div className="d-flex">
-            <Link to="/user/create-user">
-              <Button title="Create User" color={colors.yellow} />
-            </Link>
+            <Button title="Logout" color={colors.yellow} />
           </div>
         </div>
-        <table class="table-transactions table">
+
+        <div>Pemesanan</div>
+        <table className="table-transactions table mt-2">
           <thead>
             <tr>
               <th scope="col">No transactions</th>
@@ -44,12 +44,10 @@ export default function AdminHotel() {
           </thead>
           <tbody>
             <tr>
-              <th scope="row">1</th>
-              <td>Muchlis Aryana </td>
-              <td style={{ maxWidth: 82 }}>
-                12 Desember 2022 - 14 Desember 2022 (2 Day)
-              </td>
-              <td>Triple Queen</td>
+              <th scope="row">x</th>
+              <td>xxxxxxxxx </td>
+              <td style={{ maxWidth: 82 }}>xxxxxxxxxx</td>
+              <td>xxxxxxxx</td>
 
               <td>{verifikasi}</td>
               <td onClick={openPayment} className="bukti-Pembayaran">
@@ -57,9 +55,7 @@ export default function AdminHotel() {
               </td>
               <td className="d-flex" style={{ height: 70 }}>
                 <div className="me-2">
-                  <Link to="/user/edit-user/:id">
-                    <Button title="Accept" color={colors.yellow} />
-                  </Link>
+                  <Button title="Accept" color={colors.yellow} />
                 </div>
               </td>
             </tr>

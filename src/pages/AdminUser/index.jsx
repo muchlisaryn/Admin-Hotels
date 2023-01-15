@@ -52,7 +52,7 @@ export default function AdminUser() {
               <th scope="col">Role</th>
               <th scope="col">username</th>
               <th scope="col">email</th>
-              <th scope="col">telephone</th>
+
               <th scope="col">actions</th>
             </tr>
           </thead>
@@ -62,11 +62,16 @@ export default function AdminUser() {
             <tbody>
               {users?.map((item) => (
                 <tr key={item._id}>
-                  <th scope="row">1</th>
+                  <th scope="row">
+                    <img
+                      src={`http://localhost:8000/${item?.image?.name}`}
+                      style={{ width: 30, height: 30 }}
+                    />
+                  </th>
                   <td>{item?.role}</td>
                   <td>{item?.username}</td>
                   <td>{item?.email}</td>
-                  <td>{item?.telephone}</td>
+
                   <td className="d-flex">
                     <div className="me-2">
                       <Link to={`/user/edit-user/${item._id}`}>
