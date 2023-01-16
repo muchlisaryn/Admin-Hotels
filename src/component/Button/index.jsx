@@ -8,9 +8,11 @@ export default function Button({
   height,
   fontSize,
   marginRight,
+  disabled,
 }) {
   return (
     <button
+      disabled={disabled}
       onClick={onClick}
       style={{
         backgroundColor: color,

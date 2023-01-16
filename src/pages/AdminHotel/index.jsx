@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button, Sidebar } from "../../component";
 import { colors } from "../../utils/colors";
@@ -8,6 +8,8 @@ import { useState } from "react";
 
 export default function AdminHotel() {
   const [verifikasi, setVerifikasi] = useState("Belum diverifikasi");
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
 
   const openPayment = (image) => {
     Swal.fire({
@@ -23,7 +25,7 @@ export default function AdminHotel() {
       <Sidebar />
       <div className="w-100 p-3">
         <div className="d-flex justify-content-between border-bottom pb-2 mb-2">
-          <div>Hello Admin Muchlis </div>
+          <div>Hello {`${user?.username}`} </div>
           <div className="d-flex">
             <Button title="Logout" color={colors.yellow} />
           </div>

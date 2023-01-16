@@ -5,27 +5,25 @@ const initialState = {
   user: null,
   loading: false,
   userToken: null,
-  error: "",
+  error: false,
   success: false,
 };
 
-export const auth = createAsyncThunk(
-  "auth/authUser",
-  async (email, password) => {
-    try {
-      const response = await axios.post(
-        `http://localhost:8000/api/v1/cms/auth/signin`,
-        {
-          email: email,
-          password: password,
-        }
-      );
-      return response.data;
-    } catch (err) {
-      throw err;
-    }
+export const auth = createAsyncThunk("auth/authUser", async (props) => {
+  const { email, password } = props;
+  try {
+    const response = await axios.post(
+      `http://localhost:8000/api/v1/cms/auth/signin`,
+      {
+        email: email,
+        password: password,
+      }
+    );
+    return response.data;
+  } catch (err) {
+    throw err;
   }
-);
+});
 
 const authSlice = createSlice({
   name: "users",
@@ -41,20 +39,20 @@ const authSlice = createSlice({
         state.loading = true;
         state.userToken = null;
         state.success = false;
-        state.error = null;
+        state.error = false;
       })
       .addCase(auth.rejected, (state, action) => {
         state.loading = false;
         state.userToken = null;
         state.success = false;
-        state.error = action.error.message;
+        state.error = true;
       })
       .addCase(auth.fulfilled, (state, action) => {
         state.user = action.payload;
         state.loading = false;
         state.userToken = null;
         state.success = true;
-        state.error = "";
+        state.error = false;
       });
   },
 });
