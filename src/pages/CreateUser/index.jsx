@@ -16,6 +16,8 @@ export default function CreateUser() {
   const [role, setRole] = useState("user");
   const [photo, setPhoto] = useState();
   const [messageError, setMessageError] = useState("");
+  const [showPw, setShowPw] = useState("password");
+  const [textPassword, setTextPassword] = useState("Show password");
 
   const navigate = useNavigate();
 
@@ -62,6 +64,7 @@ export default function CreateUser() {
   };
 
   const handleChange = async (e) => {
+    console.log(e.target.files[0]);
     if (e.target.name === "avatar") {
       if (
         e?.target?.files[0].type === "image/jpg" ||
@@ -82,11 +85,22 @@ export default function CreateUser() {
     }
   };
 
+  const showPassword = (e) => {
+    e.preventDefault();
+    if (showPw === "text") {
+      setShowPw("password");
+      setTextPassword("Show Password");
+    } else if (showPw === "password") {
+      setShowPw("text");
+      setTextPassword("Hide Password");
+    }
+  };
+
   const Create = async (e) => {
     e.preventDefault();
 
     const res = await axios.post("http://localhost:8000/api/v1/cms/users", {
-      email: email,
+      email: email + "@Gmail.com",
       username: username,
       firstName: firstName,
       lastName: lastName,
@@ -135,11 +149,19 @@ export default function CreateUser() {
               <div className="me-2" style={{ width: 100 }}>
                 Email
               </div>
-              <input
-                placeholder="Input Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+
+              <div class="input-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text">@Gmail.com</span>
+                </div>
+              </div>
             </div>
             {messageError === "Email Sudah Terdaftar" ? (
               <p style={{ marginLeft: 97, color: "red" }}>{messageError}</p>
@@ -151,17 +173,33 @@ export default function CreateUser() {
               <div className="me-2" style={{ width: 100 }}>
                 Password
               </div>
-              <input
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+
+              <div class="input-group">
+                <input
+                  type={showPw}
+                  className="form-control"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <div>
+                  <Button
+                    height={8}
+                    onClick={showPassword}
+                    title={textPassword}
+                    backgroundColor={colors.blue}
+                    color={colors.white}
+                  />
+                </div>
+              </div>
             </div>
+
             <div className="form-group d-flex">
               <div className="me-2" style={{ width: 100 }}>
                 Username
               </div>
               <input
+                className="form-control"
                 placeholder="Input Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
@@ -172,6 +210,7 @@ export default function CreateUser() {
                 First Name
               </div>
               <input
+                className="form-control"
                 placeholder="Input First Name"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
@@ -182,6 +221,7 @@ export default function CreateUser() {
                 Last Name
               </div>
               <input
+                className="form-control"
                 placeholder="Input Last Name"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
@@ -193,6 +233,7 @@ export default function CreateUser() {
               </div>
               <input
                 placeholder="Input Email"
+                className="form-control"
                 value={telephone}
                 onChange={(e) => setTelephone(e.target.value)}
               />
@@ -214,12 +255,10 @@ export default function CreateUser() {
               />
             </div>
             <div className="form-group d-flex">
-              <div className="me-2" style={{ width: 90 }}>
-                Role
-              </div>
+              <div style={{ width: 100 }}>Role</div>
               <select
-                name="cars"
-                id="cars"
+                name="role"
+                id="role"
                 onChange={(e) => setRole(e.target.value)}
               >
                 {roles?.map((item) => (

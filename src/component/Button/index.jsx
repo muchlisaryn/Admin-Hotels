@@ -1,5 +1,3 @@
-import { colors } from "../../utils/colors";
-
 export default function Button({
   onClick,
   color,
@@ -9,14 +7,15 @@ export default function Button({
   fontSize,
   marginRight,
   disabled,
+  backgroundColor,
 }) {
   return (
     <button
       disabled={disabled}
       onClick={onClick}
       style={{
-        backgroundColor: color,
-        color: color === colors.blue ? colors.white : colors.blue,
+        backgroundColor: backgroundColor,
+        color: color,
         width: "100%",
         border: "none",
         borderRadius: 5,

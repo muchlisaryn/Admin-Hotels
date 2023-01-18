@@ -6,10 +6,14 @@ import { Button, Sidebar } from "../../component";
 import { fetchUsers } from "../../features/getUserSlice";
 import Swal from "sweetalert2";
 import { colors } from "../../utils/colors";
+import { AiOutlineUserAdd } from "react-icons/ai";
 
 export default function AdminUser() {
   const users = useSelector((state) => state.user.users);
   const loading = useSelector((state) => state.user.pending);
+  const user = useSelector((state) => state.auth.user);
+
+  const [role, setRole] = useState();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -33,23 +37,64 @@ export default function AdminUser() {
     });
   };
 
+  const roles = [
+    {
+      name: "All",
+      value: "all",
+    },
+    {
+      name: "User",
+      value: "user",
+    },
+    {
+      name: "Admin Aplikasi",
+      value: "Admin Aplikasi",
+    },
+    {
+      name: "Admin Keuangan",
+      value: "Admin Keuangan",
+    },
+    {
+      name: "Admin Hotel",
+      value: "Admin Hotel",
+    },
+  ];
+
   return (
     <div className="d-flex ">
       <Sidebar />
       <div className="w-100 p-3">
         <div className="d-flex justify-content-between border-bottom pb-3">
-          <div>Wellcome Admin Budi</div>
+          <div>{`Wellcome Admin "${user?.firstName}"`}</div>
           <div className="d-flex">
-            <Link to="/user/create-user">
-              <Button title="Create User" color={colors.yellow} />
-            </Link>
+            {user ? (
+              <Button title="Logout" color={colors.yellow} />
+            ) : (
+              <Button title="Login" color={colors.yellow} />
+            )}
           </div>
         </div>
+
+        <div className="d-flex mt-2">
+          <Link to="/user/create-user">
+            <Button color={colors.blue} backgroundColor={colors.yellow}>
+              <div className="d-flex align-items-center">
+                <AiOutlineUserAdd />
+                <div className="ms-2 me-2">Add User</div>
+              </div>
+            </Button>
+          </Link>
+        </div>
+
         <table class="table">
           <thead>
             <tr>
               <th scope="col">Foto</th>
-              <th scope="col">Role</th>
+              <th scope="col">
+                <div className="d-flex">
+                  <div>Role</div>
+                </div>
+              </th>
               <th scope="col">username</th>
               <th scope="col">email</th>
 
@@ -75,13 +120,20 @@ export default function AdminUser() {
                   <td className="d-flex">
                     <div className="me-2">
                       <Link to={`/user/edit-user/${item._id}`}>
-                        <Button title="edit" color={colors.yellow} />
+                        <Button
+                          title="Edit"
+                          backgroundColor={colors.blue}
+                          color={colors.white}
+                          height={5}
+                        />
                       </Link>
                     </div>
                     <div>
                       <Button
                         title="Hapus"
-                        color={colors.blue}
+                        backgroundColor={colors.red}
+                        color={colors.white}
+                        height={5}
                         onClick={() => delteUser(item._id)}
                       />
                     </div>

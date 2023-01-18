@@ -54,7 +54,8 @@ export default function EditUser() {
     setPhoto(null);
   };
 
-  const edit = () => {
+  const edit = (e) => {
+    e.preventDefault();
     axios.put(`http://localhost:8000/api/v1/cms/users/${id}`, {
       email: email,
       firstName: firstName,

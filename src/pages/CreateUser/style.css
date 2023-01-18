@@ -3,6 +3,6 @@
   flex-direction: row;
 }
 
-.form-group input {
+.form-group input select {
   width: 100%;
 }
