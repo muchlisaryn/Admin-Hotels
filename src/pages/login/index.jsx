@@ -32,11 +32,11 @@ export default function Login() {
     }
   });
 
-  useEffect(() => {
-    if (email.length > 5 && password.length > 0) {
-      setDisable(false);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (email.length > 5 && password.length > 0) {
+  //     setDisable(false);
+  //   }
+  // }, []);
 
   return (
     <div className="login d-flex justify-content-center align-items-center">
@@ -45,7 +45,7 @@ export default function Login() {
           <Logo size={200} />
         </div>
 
-        <div className="text-center mt-4 fw-semibold">LOGIN ADMIN</div>
+        <div className="text-center mt-3 fw-semibold">LOGIN ADMIN</div>
 
         {error ? (
           <div className="fw-bold text-center text-danger">
@@ -55,7 +55,7 @@ export default function Login() {
           <></>
         )}
 
-        <div className="mt-3">
+        <div className="mt-2">
           <div className="input-item ">
             <div className="title">Email</div>
             <input
@@ -72,13 +72,7 @@ export default function Login() {
           </div>
         </div>
         <div className="mt-4">
-          <Button
-            color={colors.blue}
-            height={15}
-            fontSize={14}
-            onClick={Login}
-            disabled={disable}
-          >
+          <Button color={colors.blue} height={15} fontSize={14} onClick={Login}>
             {loading ? <div>Loading...</div> : <div>Login</div>}
           </Button>
         </div>

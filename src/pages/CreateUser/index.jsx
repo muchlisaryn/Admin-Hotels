@@ -100,6 +100,7 @@ export default function CreateUser() {
     e.preventDefault();
 
     const res = await axios.post("http://localhost:8000/api/v1/cms/users", {
+      hotel_id: idHotel,
       email: email + "@Gmail.com",
       username: username,
       firstName: firstName,
@@ -113,6 +114,7 @@ export default function CreateUser() {
       console.log("berhasil");
       navigate("/user");
     } else {
+      setMessageError(res.response.data.msg);
       console.log(res.response.data.msg);
     }
   };

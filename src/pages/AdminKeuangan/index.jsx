@@ -23,13 +23,30 @@ export default function AdminKeuangan() {
     });
   };
 
-  console.log(data);
-
   useEffect(() => {
     axios.get(`http://localhost:8000/api/v1/cms/booking`).then((res) => {
       setData(res.data.data);
     });
   }, []);
+
+  const accept = async (id) => {
+    Swal.fire({
+      title: "Are you sure accept payment?",
+      text: "You won't be able to revert this!",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Accept !",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.put(`http://localhost:8000/api/v1/cms/booking/${id}`, {
+          statusPayment: "Berhasil di verifikasi",
+        });
+        window.location.reload(false);
+      }
+    });
+  };
 
   return (
     <div className="d-flex ">
@@ -66,15 +83,18 @@ export default function AdminKeuangan() {
                 <td>{list.hotelName}</td>
 
                 <td>{verifikasi}</td>
-                <td>
-                  <button onClick={() => openPayment(list.image_payment.name)}>
-                    {" "}
+                <td className="bukti-Pembayaran">
+                  <div onClick={() => openPayment(list.image_payment.name)}>
                     Lihat Bukti Pembayaran
-                  </button>
+                  </div>
                 </td>
                 <td className="d-flex" style={{ height: 70 }}>
                   <div className="me-2">
-                    <Button title="Accept" color={colors.yellow} />
+                    <Button
+                      title="Accept"
+                      color={colors.yellow}
+                      onClick={() => accept(list._id)}
+                    />
                   </div>
                   <div>
                     <Button title="reject" color={colors.yellow} />
