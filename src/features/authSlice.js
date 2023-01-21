@@ -5,6 +5,7 @@ const initialState = {
   user: null,
   loading: false,
   userToken: null,
+  username: null,
   error: false,
   success: false,
 };
@@ -29,7 +30,12 @@ const authSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
+    setUser: (state, action) => {
+      localStorage.setItem("admin", action.payload);
+      state.userToken = localStorage.getItem("admin");
+    },
     removeLogin: (state) => {
+      localStorage.removeItem("admin");
       state.user = null;
     },
   },
@@ -56,5 +62,5 @@ const authSlice = createSlice({
       });
   },
 });
-
+export const { setUser, removeLogin } = authSlice.actions;
 export default authSlice.reducer;

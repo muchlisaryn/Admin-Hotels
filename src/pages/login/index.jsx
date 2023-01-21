@@ -4,7 +4,7 @@ import "./style.css";
 import { useState, useEffect } from "react";
 import { Spinner } from "../../asset/img";
 import { useDispatch, useSelector } from "react-redux";
-import { auth } from "../../features/authSlice";
+import { auth, setUser } from "../../features/authSlice";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -16,6 +16,7 @@ export default function Login() {
   const loading = useSelector((state) => state.auth.loading);
   const error = useSelector((state) => state.auth.error);
   const user = useSelector((state) => state.auth.user);
+  const userTOken = useSelector((state) => state.auth.userToken);
   const navigate = useNavigate();
 
   const Login = async () => {
@@ -28,15 +29,10 @@ export default function Login() {
     } else if (user?.role === "Admin Keuangan") {
       navigate("/keuangan");
     } else if (user?.role === "Admin Aplikasi") {
+      dispatch(setUser(user?.token));
       navigate("/user");
     }
   });
-
-  // useEffect(() => {
-  //   if (email.length > 5 && password.length > 0) {
-  //     setDisable(false);
-  //   }
-  // }, []);
 
   return (
     <div className="login d-flex justify-content-center align-items-center">
@@ -72,7 +68,13 @@ export default function Login() {
           </div>
         </div>
         <div className="mt-4">
-          <Button color={colors.blue} height={15} fontSize={14} onClick={Login}>
+          <Button
+            color={colors.white}
+            backgroundColor={colors.blue}
+            height={15}
+            fontSize={14}
+            onClick={Login}
+          >
             {loading ? <div>Loading...</div> : <div>Login</div>}
           </Button>
         </div>

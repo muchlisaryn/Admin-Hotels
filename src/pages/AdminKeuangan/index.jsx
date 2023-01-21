@@ -6,27 +6,26 @@ import Swal from "sweetalert2";
 import "./style.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { fetchBooking } from "../../features/getBookingSlice";
+import HeaderNav from "../../component/molecules/HeaderNav";
 
 export default function AdminKeuangan() {
-  const [verifikasi, setVerifikasi] = useState("Belum diverifikasi");
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
-
-  const [data, setData] = useState([]);
+  const data = useSelector((state) => state.booking.booking);
 
   const openPayment = (image) => {
     Swal.fire({
+      text: `Nomor Rekening : 0213213214 a/n Muchlis`,
       imageUrl: `http://localhost:8000/${image}`,
-      imageHeight: 600,
-      imageWidth: 500,
+      imageHeight: 500,
+      imageWidth: 250,
       imageAlt: "Image payment",
     });
   };
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/api/v1/cms/booking`).then((res) => {
-      setData(res.data.data);
-    });
+    dispatch(fetchBooking());
   }, []);
 
   const accept = async (id) => {
@@ -41,7 +40,28 @@ export default function AdminKeuangan() {
     }).then((result) => {
       if (result.isConfirmed) {
         axios.put(`http://localhost:8000/api/v1/cms/booking/${id}`, {
-          statusPayment: "Berhasil di verifikasi",
+          statusPayment: "Pembayaran Berhasil di validasi",
+          statusOrder: "Menunggu Konfirmasi Hotel",
+        });
+        window.location.reload(false);
+      }
+    });
+  };
+
+  const reject = async (id) => {
+    Swal.fire({
+      title: "Are you sure reject payment?",
+      text: "You won't be able to revert this!",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, reject !",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.put(`http://localhost:8000/api/v1/cms/booking/${id}`, {
+          currentStatus: "Dibatalkan",
+          statusPayment: "Pembayaran ditolak",
         });
         window.location.reload(false);
       }
@@ -54,36 +74,69 @@ export default function AdminKeuangan() {
       <div className="w-100 p-3">
         <div className="d-flex justify-content-between border-bottom pb-2 mb-2">
           <div>Hello {`${user?.username}`} </div>
-          {user ? (
-            <Button title="Logout" color={colors.yellow} />
-          ) : (
-            <Button title="Login" color={colors.yellow} />
-          )}
+          <div>
+            {user ? (
+              <Button
+                title="Logout"
+                color={colors.white}
+                backgroundColor={colors.blue}
+              />
+            ) : (
+              <Button
+                title="Login"
+                color={colors.white}
+                backgroundColor={colors.blue}
+              />
+            )}
+          </div>
+        </div>
+
+        <div>
+          <HeaderNav />
         </div>
 
         <div>Pemesanan</div>
         <table className="table-transactions table mt-2">
           <thead>
             <tr>
-              <th scope="col">No transactions</th>
-              <th scope="col">Customer</th>
-              <th scope="col">Date Transactions</th>
-              <th scope="col">Hotel Name</th>
-              <th scope="col">Status Pembayaran</th>
-              <th scope="col">Bukti Pembayaran</th>
-              <th scope="col">actions</th>
+              <th className="item-table" scope="col">
+                No transactions
+              </th>
+              <th className="item-table" scope="col">
+                Customer
+              </th>
+              <th className="item-table" scope="col">
+                Date Transactions
+              </th>
+              <th className="item-table" scope="col">
+                Hotel Name
+              </th>
+              <th className="item-table" scope="col">
+                Status Pemesanan
+              </th>
+              <th className="item-table" scope="col">
+                Status Pembayaran
+              </th>
+              <th className="item-table" scope="col">
+                Bukti Pembayaran
+              </th>
+              <th className="item-table" scope="col">
+                actions
+              </th>
             </tr>
           </thead>
           <tbody>
             {data?.map((list) => (
               <tr>
-                <th scope="row">#{list.order_id}</th>
-                <td>{list.customer.username}</td>
-                <td>{list.transaction_time}</td>
-                <td>{list.hotelName}</td>
-
-                <td>{verifikasi}</td>
-                <td className="bukti-Pembayaran">
+                <th className="item-table" scope="row">
+                  #{list.order_id}
+                </th>
+                <td className="item-table">{list.customer.username}</td>
+                <td className="item-table">{list.transaction_time}</td>
+                <td className="item-table">{list.hotelName}</td>
+                <td className="item-table">....</td>
+                <td className="item-table">{list.statusPayment}</td>
+                <td className="item-table bukti-Pembayaran">
                   <div onClick={() => openPayment(list.image_payment.name)}>
                     Lihat Bukti Pembayaran
                   </div>
@@ -92,12 +145,20 @@ export default function AdminKeuangan() {
                   <div className="me-2">
                     <Button
                       title="Accept"
-                      color={colors.yellow}
+                      fontSize={12}
+                      color={colors.white}
+                      backgroundColor={colors.blue}
                       onClick={() => accept(list._id)}
                     />
                   </div>
                   <div>
-                    <Button title="reject" color={colors.yellow} />
+                    <Button
+                      title="Reject"
+                      fontSize={12}
+                      color={colors.white}
+                      backgroundColor={colors.red}
+                      onClick={() => reject(list._id)}
+                    />
                   </div>
                 </td>
               </tr>

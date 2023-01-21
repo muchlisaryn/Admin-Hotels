@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Sidebar } from "../../component";
 import { colors } from "../../utils/colors";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import "./style.css";
 
 export default function CreateUser() {
@@ -13,13 +14,35 @@ export default function CreateUser() {
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [telephone, setTelephone] = useState();
+  const [Nomorek, setNomorRek] = useState();
+  const [nameBank, setNameBank] = useState();
+  const [PemilikRek, setPemilikRek] = useState();
   const [role, setRole] = useState("user");
   const [photo, setPhoto] = useState();
   const [messageError, setMessageError] = useState("");
   const [showPw, setShowPw] = useState("password");
-  const [textPassword, setTextPassword] = useState("Show password");
+  const [textPassword, setTextPassword] = useState(<AiFillEye />);
 
   const navigate = useNavigate();
+
+  const rolesBank = [
+    {
+      name: "BNI ",
+      value: "BNI",
+    },
+    {
+      name: "BCA",
+      value: "BCA",
+    },
+    {
+      name: "BRI",
+      value: "BRI",
+    },
+    {
+      name: "Mandiri",
+      value: "Mandiri",
+    },
+  ];
 
   const roles = [
     {
@@ -89,10 +112,10 @@ export default function CreateUser() {
     e.preventDefault();
     if (showPw === "text") {
       setShowPw("password");
-      setTextPassword("Show Password");
+      setTextPassword(<AiFillEyeInvisible />);
     } else if (showPw === "password") {
       setShowPw("text");
-      setTextPassword("Hide Password");
+      setTextPassword(<AiFillEye />);
     }
   };
 
@@ -101,7 +124,7 @@ export default function CreateUser() {
 
     const res = await axios.post("http://localhost:8000/api/v1/cms/users", {
       hotel_id: idHotel,
-      email: email + "@Gmail.com",
+      email: email,
       username: username,
       firstName: firstName,
       lastName: lastName,
@@ -127,28 +150,18 @@ export default function CreateUser() {
           <div className="fw-bold">CREATE USER</div>
           <div className="d-flex">
             <Link to="/user">
-              <Button title="Back To Home" color={colors.yellow} />
+              <Button
+                title="Back To Home"
+                color={colors.white}
+                backgroundColor={colors.blue}
+              />
             </Link>
           </div>
         </div>
         <div className="edit">
           <form method="POST">
-            {role === "Admin Hotel" ? (
-              <div className="form-group d-flex  ">
-                <div className="me-2" style={{ width: 100 }}>
-                  ID Hotel
-                </div>
-                <input
-                  placeholder="Input Email"
-                  value={idHotel}
-                  onChange={(e) => setIdHotel(e.target.value)}
-                />
-              </div>
-            ) : (
-              <></>
-            )}
             <div className="form-group d-flex  ">
-              <div className="me-2" style={{ width: 100 }}>
+              <div className="me-2" style={{ width: 180 }}>
                 Email
               </div>
 
@@ -156,7 +169,7 @@ export default function CreateUser() {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Email"
+                  placeholder="example@gmail.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -172,7 +185,7 @@ export default function CreateUser() {
             )}
 
             <div className="form-group d-flex">
-              <div className="me-2" style={{ width: 100 }}>
+              <div className="me-2" style={{ width: 180 }}>
                 Password
               </div>
 
@@ -186,18 +199,26 @@ export default function CreateUser() {
                 />
                 <div>
                   <Button
+                    backgroundColor={colors.blue}
+                    height={8}
+                    color={colors.white}
+                    onClick={showPassword}
+                  >
+                    {textPassword}
+                  </Button>
+                  {/* <Button
                     height={8}
                     onClick={showPassword}
                     title={textPassword}
                     backgroundColor={colors.blue}
                     color={colors.white}
-                  />
+                  /> */}
                 </div>
               </div>
             </div>
 
             <div className="form-group d-flex">
-              <div className="me-2" style={{ width: 100 }}>
+              <div className="me-2" style={{ width: 180 }}>
                 Username
               </div>
               <input
@@ -208,7 +229,7 @@ export default function CreateUser() {
               />
             </div>
             <div className="form-group d-flex">
-              <div className="me-2" style={{ width: 100 }}>
+              <div className="me-2" style={{ width: 180 }}>
                 First Name
               </div>
               <input
@@ -219,7 +240,7 @@ export default function CreateUser() {
               />
             </div>
             <div className="form-group d-flex">
-              <div className="me-2" style={{ width: 100 }}>
+              <div className="me-2" style={{ width: 180 }}>
                 Last Name
               </div>
               <input
@@ -230,7 +251,7 @@ export default function CreateUser() {
               />
             </div>
             <div className="form-group d-flex">
-              <div className="me-2" style={{ width: 100 }}>
+              <div className="me-2" style={{ width: 180 }}>
                 Telephone
               </div>
               <input
@@ -240,13 +261,47 @@ export default function CreateUser() {
                 onChange={(e) => setTelephone(e.target.value)}
               />
             </div>
+
+            <div className="d-flex mt-2">
+              <div style={{ width: 150 }}>Nomor Rekening</div>
+              <div className="d-flex">
+                <select
+                  name="role"
+                  id="role"
+                  onChange={(e) => setRole(e.target.value)}
+                >
+                  {rolesBank?.map((item) => (
+                    <option value={item.value}>{item.name}</option>
+                  ))}
+                </select>
+                <input
+                  placeholder="Input Nomor rekening..."
+                  className="form-control ms-2"
+                  value={Nomorek}
+                  onChange={(e) => setNomorRek(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="form-group d-flex">
+              <div className="me-2" style={{ width: 180 }}>
+                Pemilik Rekening
+              </div>
+              <input
+                placeholder="Nama Pemilik Rekening..."
+                className="form-control"
+                value={telephone}
+                onChange={(e) => setTelephone(e.target.value)}
+              />
+            </div>
+
             {messageError === "Telephone harus diisi" ? (
               <p style={{ marginLeft: 97, color: "red" }}>{messageError}</p>
             ) : (
               <></>
             )}
             <div className="form-group d-flex">
-              <div className="me-2" style={{ width: 100 }}>
+              <div className="me-2" style={{ width: 180 }}>
                 Photo
               </div>
               <input
@@ -257,7 +312,7 @@ export default function CreateUser() {
               />
             </div>
             <div className="form-group d-flex">
-              <div style={{ width: 100 }}>Role</div>
+              <div style={{ width: 150 }}>Role</div>
               <select
                 name="role"
                 id="role"
@@ -272,12 +327,18 @@ export default function CreateUser() {
               <div className="d-flex w-25">
                 <Button
                   title="Create"
-                  color={colors.blue}
+                  color={colors.white}
+                  backgroundColor={colors.blue}
                   height={10}
                   marginRight={5}
                   onClick={Create}
                 />
-                <Button title="Clear" height={10} onClick={clear} />
+                <Button
+                  title="Clear"
+                  height={10}
+                  onClick={clear}
+                  backgroundColor={colors.green}
+                />
               </div>
             </div>
           </form>

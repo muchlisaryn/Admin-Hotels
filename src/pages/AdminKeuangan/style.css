@@ -1,3 +1,8 @@
-.table-transactions th {
+.item-table {
   font-size: 10px;
+}
+
+.bukti-Pembayaran {
+  color: blue;
+  cursor: zoom-in;
 }

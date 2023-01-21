@@ -2,8 +2,8 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Button, Sidebar } from "../../component";
-import { fetchUsers } from "../../features/getUserSlice";
+import { Button, Navbar, Sidebar } from "../../component";
+import { fetchUsers, filterUser } from "../../features/getUserSlice";
 import Swal from "sweetalert2";
 import { colors } from "../../utils/colors";
 import { AiOutlineUserAdd } from "react-icons/ai";
@@ -11,7 +11,6 @@ import { AiOutlineUserAdd } from "react-icons/ai";
 export default function AdminUser() {
   const users = useSelector((state) => state.user.users);
   const loading = useSelector((state) => state.user.pending);
-  const user = useSelector((state) => state.auth.user);
 
   const [role, setRole] = useState();
   const dispatch = useDispatch();
@@ -64,17 +63,7 @@ export default function AdminUser() {
     <div className="d-flex ">
       <Sidebar />
       <div className="w-100 p-3">
-        <div className="d-flex justify-content-between border-bottom pb-3">
-          <div>{`Wellcome Admin "${user?.firstName}"`}</div>
-          <div className="d-flex">
-            {user ? (
-              <Button title="Logout" color={colors.yellow} />
-            ) : (
-              <Button title="Login" color={colors.yellow} />
-            )}
-          </div>
-        </div>
-
+        <Navbar />
         <div className="d-flex mt-2">
           <Link to="/user/create-user">
             <Button color={colors.blue} backgroundColor={colors.yellow}>
