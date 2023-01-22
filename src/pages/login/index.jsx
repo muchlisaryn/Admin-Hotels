@@ -27,10 +27,10 @@ export default function Login() {
     if (user?.role === "user") {
       alert("Anda tidak bisa mengakses halaman ini");
     } else if (user?.role === "Admin Keuangan") {
-      navigate("/keuangan");
+      navigate("/admin/keuangan/pemesanan-baru");
     } else if (user?.role === "Admin Aplikasi") {
       dispatch(setUser(user?.token));
-      navigate("/user");
+      navigate("/admin/aplikasi/kelolaUser");
     }
   });
 

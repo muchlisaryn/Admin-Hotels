@@ -42,7 +42,7 @@ export default function Sidebar() {
             <NavLink
               className="menu-item border-bottom"
               style={navLink}
-              to="/user"
+              to="/admin/aplikasi/kelolaUser"
             >
               Kelola User
             </NavLink>

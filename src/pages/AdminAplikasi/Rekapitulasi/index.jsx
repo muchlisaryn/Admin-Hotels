@@ -3,7 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Sidebar, Navbar } from "../../../component";
 import { fetchBooking } from "../../../features/getBookingSlice";
 import "./style.css";
-import { convertDate } from "../../../utils/formatDate";
+import {
+  convertDate,
+  formatDate,
+  lengthOfDay,
+} from "../../../utils/formatDate";
+import { formatIDR } from "../../../utils/formatIDR";
 
 export default function AdminAplikasiRekapitulasi() {
   const loading = useSelector((state) => state.user.pending);
@@ -35,13 +40,7 @@ export default function AdminAplikasiRekapitulasi() {
           ) : (
             <tbody>
               {data?.map((item, index) => (
-                <tr
-                  style={
-                    item?.statusOrder
-                      ? { backgroundColor: "#ffb4b4" }
-                      : { backgroundColor: "#b4ffc4" }
-                  }
-                >
+                <tr>
                   <th scope="row">{index + 1}</th>
                   <td className="tab-item">{item?.transaction_time}</td>
                   <td className="tab-item">
@@ -51,7 +50,7 @@ export default function AdminAplikasiRekapitulasi() {
                         className=" d-inline-block text-truncate"
                         style={{ maxWidth: 160 }}
                       >
-                        {item?.hotelName}
+                        {item?.hotel_name}
                       </div>
                     </div>
                     <div>
@@ -60,12 +59,18 @@ export default function AdminAplikasiRekapitulasi() {
                     </div>
                   </td>
                   <td className="tab-item">
-                    {convertDate(item?.checkIn)} - {convertDate(item?.checkOut)}
+                    {convertDate(item?.checkIn)} - {convertDate(item?.checkOut)}{" "}
+                    (
+                    {lengthOfDay(
+                      formatDate(item?.checkIn),
+                      formatDate(item?.checkOut)
+                    )}
+                    Days)
                   </td>
-                  <td className="tab-item">{item?.Total_payment}</td>
                   <td className="tab-item">
-                    {item?.statusOrder ? `NonActive` : `Active`}
+                    {formatIDR.format(item?.Total_payment)}
                   </td>
+                  <td className="tab-item">{item?.currentStatus}</td>
                 </tr>
               ))}
             </tbody>

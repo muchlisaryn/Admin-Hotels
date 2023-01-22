@@ -2,10 +2,10 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Button, Navbar, Sidebar } from "../../component";
-import { fetchUsers, filterUser } from "../../features/getUserSlice";
+import { Button, Navbar, Sidebar } from "../../../component";
+import { fetchUsers, filterUser } from "../../../features/getUserSlice";
 import Swal from "sweetalert2";
-import { colors } from "../../utils/colors";
+import { colors } from "../../../utils/colors";
 import { AiOutlineUserAdd } from "react-icons/ai";
 
 export default function AdminUser() {

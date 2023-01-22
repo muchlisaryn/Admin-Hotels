@@ -135,7 +135,7 @@ export default function CreateUser() {
     });
     if (res.data.data) {
       console.log("berhasil");
-      navigate("/user");
+      navigate("/admin/aplikasi/kelolaUser");
     } else {
       setMessageError(res.response.data.msg);
       console.log(res.response.data.msg);
