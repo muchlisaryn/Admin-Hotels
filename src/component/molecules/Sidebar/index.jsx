@@ -63,7 +63,7 @@ export default function Sidebar() {
             <NavLink
               className="menu-item border-bottom border-top "
               style={navLink}
-              to="/"
+              to="/admin/keuangan/pemesanan/peanan-baru"
             >
               Pemesanan
             </NavLink>
@@ -74,10 +74,11 @@ export default function Sidebar() {
             >
               Rekapitulasi
             </NavLink>
-            <NavLink className="menu-item border-bottom" style={navLink} to="/">
-              Rekening Aplikasi
-            </NavLink>
-            <NavLink className="menu-item border-bottom" style={navLink} to="/">
+            <NavLink
+              className="menu-item border-bottom"
+              style={navLink}
+              to="/admin/keuangan/Kelola-keuangan"
+            >
               Kelola Keuangan
             </NavLink>
           </>

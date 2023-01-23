@@ -36,6 +36,7 @@ export default function Navbar() {
             color={colors.white}
             backgroundColor={colors.blue}
             onClick={logout}
+            height={8}
           />
         ) : (
           <Button
@@ -43,6 +44,7 @@ export default function Navbar() {
             color={colors.white}
             backgroundColor={colors.blue}
             onClick={() => navigate("/")}
+            height={8}
           />
         )}
       </div>

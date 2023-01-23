@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 
-import { Button, Sidebar, HeaderNav } from "../../../component";
+import { Button, Sidebar, HeaderNav, Navbar } from "../../../component";
 import { colors } from "../../../utils/colors";
 import Swal from "sweetalert2";
 import { useState, useEffect } from "react";
@@ -74,24 +74,7 @@ export default function NewOrder() {
     <div className="d-flex ">
       <Sidebar />
       <div className="w-100 p-3">
-        <div className="d-flex justify-content-between border-bottom pb-2 mb-2">
-          <div>Hello {`${user?.username}`} </div>
-          <div>
-            {user ? (
-              <Button
-                title="Logout"
-                color={colors.white}
-                backgroundColor={colors.blue}
-              />
-            ) : (
-              <Button
-                title="Login"
-                color={colors.white}
-                backgroundColor={colors.blue}
-              />
-            )}
-          </div>
-        </div>
+        <Navbar />
 
         <div>
           <HeaderNav />

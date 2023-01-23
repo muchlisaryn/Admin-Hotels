@@ -10,7 +10,13 @@ import {
   AdminAplikasiRekapitulasi,
   AdminAplikasiDashboard,
 } from "./pages";
-import { NewOrder, OrderProses, PaymentFailed } from "./pages/AdminKeuangan";
+import {
+  EditRekening,
+  KelolaKeuangan,
+  NewOrder,
+  OrderProses,
+  PaymentFailed,
+} from "./pages/AdminKeuangan";
 
 function App() {
   return (
@@ -29,11 +35,25 @@ function App() {
         <Route path="user/edit-user/:id" element={<EditUser />} />
         <Route path="user/create-user" element={<CreateUser />} />
 
-        <Route path="/admin/keuangan/pemesanan-baru" element={<NewOrder />} />
-        <Route path="/admin/keuangan/Diproses" element={<OrderProses />} />
         <Route
-          path="/admin/keuangan/Pembayaran-ditolak"
+          path="/admin/keuangan/pemesanan/pemesanan-baru"
+          element={<NewOrder />}
+        />
+        <Route
+          path="/admin/keuangan/pemesanan/Diproses"
+          element={<OrderProses />}
+        />
+        <Route
+          path="/admin/keuangan/pemesanan/Pembayaran-ditolak"
           element={<PaymentFailed />}
+        />
+        <Route
+          path="/admin/keuangan/Kelola-keuangan"
+          element={<KelolaKeuangan />}
+        />
+        <Route
+          path="/admin/keuangan/Kelola-keuangan/edit-rekening/:id"
+          element={<EditRekening />}
         />
       </Routes>
     </BrowserRouter>

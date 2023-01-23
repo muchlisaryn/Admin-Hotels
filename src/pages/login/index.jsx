@@ -27,7 +27,7 @@ export default function Login() {
     if (user?.role === "user") {
       alert("Anda tidak bisa mengakses halaman ini");
     } else if (user?.role === "Admin Keuangan") {
-      navigate("/admin/keuangan/pemesanan-baru");
+      navigate("/admin/keuangan/pemesanan/pemesanan-baru");
     } else if (user?.role === "Admin Aplikasi") {
       dispatch(setUser(user?.token));
       navigate("/admin/aplikasi/kelolaUser");

@@ -30,14 +30,14 @@ export default function HeaderNav() {
     <div className="header-nav">
       <NavLink
         style={navLink}
-        to="/admin/keuangan/pemesanan-baru"
+        to="/admin/keuangan/pemesanan/pemesanan-baru"
         className="nav-item"
       >
         {`Pemesanan Baru (${newOrder?.length})`}
       </NavLink>
       <NavLink
         style={navLink}
-        to="/admin/keuangan/Diproses"
+        to="/admin/keuangan/pemesanan/Diproses"
         className="nav-item"
       >
         {`Diproses (${processOrder?.length})`}

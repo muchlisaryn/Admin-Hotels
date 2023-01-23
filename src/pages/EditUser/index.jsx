@@ -66,7 +66,7 @@ export default function EditUser() {
       telephone: telephone,
       username: username,
     });
-    navigate("/user");
+    navigate("/admin/aplikasi/kelolaUser");
   };
 
   return (
@@ -76,7 +76,7 @@ export default function EditUser() {
         <div className="d-flex justify-content-between mb-3 pb-2 border-bottom">
           <div className="fw-bold">EDIT USER</div>
           <div className="d-flex">
-            <Link to="/user">
+            <Link to="/admin/aplikasi/kelolaUser">
               <Button title="Back To Home" color={colors.yellow} />
             </Link>
           </div>
