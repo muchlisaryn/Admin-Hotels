@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Sidebar, Navbar } from "../../../component";
 import { fetchBooking } from "../../../features/getBookingSlice";
@@ -14,6 +14,7 @@ export default function AdminAplikasiRekapitulasi() {
   const loading = useSelector((state) => state.user.pending);
   const dispatch = useDispatch();
   const data = useSelector((state) => state.booking.booking);
+  const name = useSelector((state) => state.auth.username);
 
   useEffect(() => {
     dispatch(fetchBooking());
@@ -23,7 +24,7 @@ export default function AdminAplikasiRekapitulasi() {
     <div className="d-flex">
       <Sidebar />
       <div className="w-100 p-3">
-        <Navbar />
+        <Navbar name={name} />
         <table class="table tab-header">
           <thead>
             <tr>

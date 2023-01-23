@@ -1,5 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
-import { Button, Sidebar, HeaderNav, Navbar } from "../../../../component";
+import { useSelector } from "react-redux";
+import { Button, Sidebar, Navbar } from "../../../../component";
 import { convertDate } from "../../../../utils/formatDate";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
@@ -17,13 +17,36 @@ export default function DetailPemesanan() {
   const [detail, setDetail] = useState({});
   console.log("ini data booking", detail);
 
-  const openPayment = (image) => {
+  const reject = async () => {
+    const result = await axios.put(
+      `http://localhost:8000/api/v1/cms/booking/${id}`,
+      {
+        statusOrder: "Dibatalkan sistem, Kerena kamar tidak tersedia",
+        statusPayment: "Dana kamu akan di kembalikan",
+      }
+    );
+    if (result.data) {
+    }
+  };
+
+  const accept = () => {
     Swal.fire({
-      text: `Nomor Rekening : 0213213214 a/n Muchlis`,
-      imageUrl: `http://localhost:8000/${image}`,
-      imageHeight: 500,
-      imageWidth: 250,
-      imageAlt: "Image payment",
+      title: "Are you sure Accept Order?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, accept!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.put(`http://localhost:8000/api/v1/cms/booking/${id}`, {
+          statusOrder: "Dibatalkan sistem, Kerena kamar tidak tersedia",
+          statusPayment: "Dana akan di kembalikan",
+          currentStatus: "Berhasil",
+        });
+        navigate("/admin/Hotel/Pemesanan");
+      }
     });
   };
 
@@ -101,6 +124,7 @@ export default function DetailPemesanan() {
               height={6}
               backgroundColor={colors.green}
               color={colors.white}
+              onClick={accept}
             >
               Accept
             </Button>

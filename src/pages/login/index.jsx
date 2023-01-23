@@ -4,7 +4,7 @@ import "./style.css";
 import { useState, useEffect } from "react";
 import { Spinner } from "../../asset/img";
 import { useDispatch, useSelector } from "react-redux";
-import { auth, setUser, setUserName } from "../../features/authSlice";
+import { auth, setRole, setUser, setUserName } from "../../features/authSlice";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -24,17 +24,24 @@ export default function Login() {
   };
 
   console.log("ini user", user);
+
   useEffect(() => {
     if (user?.role === "user") {
       alert("Anda tidak bisa mengakses halaman ini");
     } else if (user?.role === "Admin Keuangan") {
+      dispatch(setUser(user?.token));
+      dispatch(setUserName(user?.firstName));
+      dispatch(setRole(user?.role));
       navigate("/admin/keuangan/pemesanan/pemesanan-baru");
     } else if (user?.role === "Admin Aplikasi") {
       dispatch(setUser(user?.token));
+      dispatch(setUserName(user?.firstName));
+      dispatch(setRole(user?.role));
       navigate("/admin/aplikasi/kelolaUser");
     } else if (user?.role === "Admin Hotel") {
       dispatch(setUser(user?.hotel?.hotel_id));
       dispatch(setUserName(user?.hotel?.name));
+      dispatch(setRole(user?.role));
       navigate("/admin/Hotel/Pemesanan");
     }
   });

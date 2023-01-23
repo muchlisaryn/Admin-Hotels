@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { removeLogin } from "../../../features/authSlice";
 import Swal from "sweetalert2";
 
-export default function Navbar({ name }) {
+export default function Navbar() {
   const user = useSelector((state) => state.auth.dataUser);
+  const name = useSelector((state) => state.auth.username);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

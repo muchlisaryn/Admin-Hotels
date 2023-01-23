@@ -2,8 +2,8 @@ import axios from "axios";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Button, Sidebar } from "../../component";
-import { colors } from "../../utils/colors";
+import { Button, Sidebar } from "../../../component";
+import { colors } from "../../../utils/colors";
 import "./style.css";
 
 export default function EditUser() {

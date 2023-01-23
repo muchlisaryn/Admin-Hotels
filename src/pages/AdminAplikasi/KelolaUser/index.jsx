@@ -3,13 +3,14 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button, Navbar, Sidebar } from "../../../component";
-import { fetchUsers, filterUser } from "../../../features/getUserSlice";
+import { fetchUsers } from "../../../features/getUserSlice";
 import Swal from "sweetalert2";
 import { colors } from "../../../utils/colors";
 import { AiOutlineUserAdd } from "react-icons/ai";
 
 export default function AdminUser() {
-  const users = useSelector((state) => state.user.users);
+  const data = useSelector((state) => state.user.users);
+  const name = useSelector((state) => state.auth.username);
   const loading = useSelector((state) => state.user.pending);
 
   const [role, setRole] = useState();
@@ -63,7 +64,7 @@ export default function AdminUser() {
     <div className="d-flex ">
       <Sidebar />
       <div className="w-100 p-3">
-        <Navbar />
+        <Navbar name={name} />
         <div className="d-flex mt-2">
           <Link to="/user/create-user">
             <Button color={colors.blue} backgroundColor={colors.yellow}>
@@ -94,7 +95,7 @@ export default function AdminUser() {
             <div>Loading...</div>
           ) : (
             <tbody>
-              {users?.map((item) => (
+              {data?.map((item) => (
                 <tr key={item._id}>
                   <th scope="row">
                     <img

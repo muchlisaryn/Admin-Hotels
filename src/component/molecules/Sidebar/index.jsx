@@ -9,7 +9,7 @@ import { useEffect } from "react";
 
 export default function Sidebar() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.user);
+  const role = useSelector((state) => state.auth.role);
   const dataOrder = useSelector((state) => state.booking.booking);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export default function Sidebar() {
           <Logo size={140} />
         </div>
 
-        {user?.role === "Admin Aplikasi" ? (
+        {role === "Admin Aplikasi" ? (
           <>
             <NavLink
               className="menu-item border-bottom border-top"
@@ -57,7 +57,7 @@ export default function Sidebar() {
         ) : (
           <></>
         )}
-        {user?.role === "Admin Keuangan" ? (
+        {role === "Admin Keuangan" ? (
           <>
             {" "}
             <NavLink

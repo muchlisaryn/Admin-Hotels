@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Sidebar } from "../../component";
-import { colors } from "../../utils/colors";
+import { Button, Sidebar } from "../../../component";
+import { colors } from "../../../utils/colors";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import "./style.css";
 

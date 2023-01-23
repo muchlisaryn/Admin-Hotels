@@ -1,7 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Sidebar, HeaderNav, Navbar } from "../../../component";
-import { colors } from "../../../utils/colors";
-import Swal from "sweetalert2";
 import { useEffect } from "react";
 import { fetchBooking } from "../../../features/getBookingSlice";
 import "./style.css";
@@ -20,16 +18,6 @@ export default function HotelOrder() {
   const filterHotel = data?.filter((item) => item.hotel_id === hotel);
   const hotelName = useSelector((state) => state.auth.username);
   console.log("ini data booking", data);
-
-  const openPayment = (image) => {
-    Swal.fire({
-      text: `Nomor Rekening : 0213213214 a/n Muchlis`,
-      imageUrl: `http://localhost:8000/${image}`,
-      imageHeight: 500,
-      imageWidth: 250,
-      imageAlt: "Image payment",
-    });
-  };
 
   useEffect(() => {
     dispatch(fetchBooking());
