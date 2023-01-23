@@ -9,6 +9,7 @@ import {
   CreateUser,
   AdminAplikasiRekapitulasi,
   AdminAplikasiDashboard,
+  DetailPemesanan,
 } from "./pages";
 import {
   EditRekening,
@@ -17,6 +18,7 @@ import {
   OrderProses,
   PaymentFailed,
 } from "./pages/AdminKeuangan";
+import HotelOrder from "./pages/AdminHotel/Pemesanan";
 
 function App() {
   return (
@@ -54,6 +56,11 @@ function App() {
         <Route
           path="/admin/keuangan/Kelola-keuangan/edit-rekening/:id"
           element={<EditRekening />}
+        />
+        <Route path="/admin/Hotel/Pemesanan" element={<HotelOrder />} />
+        <Route
+          path="/admin/Hotel/Pemesanan/detail-pemesanan/:id"
+          element={<DetailPemesanan />}
         />
       </Routes>
     </BrowserRouter>

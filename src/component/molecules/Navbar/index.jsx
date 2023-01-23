@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { removeLogin } from "../../../features/authSlice";
 import Swal from "sweetalert2";
 
-export default function Navbar() {
-  const user = useSelector((state) => state.auth.user);
+export default function Navbar({ name }) {
+  const user = useSelector((state) => state.auth.dataUser);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -27,8 +27,8 @@ export default function Navbar() {
   };
 
   return (
-    <div className="d-flex justify-content-between border-bottom pb-3">
-      <div>{`Wellcome Admin "${user?.firstName}"`}</div>
+    <div className="d-flex justify-content-between border-bottom pb-3 align-items-center">
+      <div>{`Wellcome Admin "${name}"`}</div>
       <div className="d-flex">
         {user ? (
           <Button
@@ -36,7 +36,7 @@ export default function Navbar() {
             color={colors.white}
             backgroundColor={colors.blue}
             onClick={logout}
-            height={8}
+            height={7}
           />
         ) : (
           <Button

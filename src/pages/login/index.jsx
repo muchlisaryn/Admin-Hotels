@@ -4,7 +4,7 @@ import "./style.css";
 import { useState, useEffect } from "react";
 import { Spinner } from "../../asset/img";
 import { useDispatch, useSelector } from "react-redux";
-import { auth, setUser } from "../../features/authSlice";
+import { auth, setUser, setUserName } from "../../features/authSlice";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -16,13 +16,14 @@ export default function Login() {
   const loading = useSelector((state) => state.auth.loading);
   const error = useSelector((state) => state.auth.error);
   const user = useSelector((state) => state.auth.user);
-  const userTOken = useSelector((state) => state.auth.userToken);
+
   const navigate = useNavigate();
 
   const Login = async () => {
     dispatch(auth({ email, password }));
   };
 
+  console.log("ini user", user);
   useEffect(() => {
     if (user?.role === "user") {
       alert("Anda tidak bisa mengakses halaman ini");
@@ -31,6 +32,10 @@ export default function Login() {
     } else if (user?.role === "Admin Aplikasi") {
       dispatch(setUser(user?.token));
       navigate("/admin/aplikasi/kelolaUser");
+    } else if (user?.role === "Admin Hotel") {
+      dispatch(setUser(user?.hotel?.hotel_id));
+      dispatch(setUserName(user?.hotel?.name));
+      navigate("/admin/Hotel/Pemesanan");
     }
   });
 

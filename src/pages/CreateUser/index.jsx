@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Sidebar } from "../../component";
 import { colors } from "../../utils/colors";
@@ -22,16 +22,24 @@ export default function CreateUser() {
   const [messageError, setMessageError] = useState("");
   const [showPw, setShowPw] = useState("password");
   const [textPassword, setTextPassword] = useState(<AiFillEye />);
+  const [dataHotel, setDataHotel] = useState([]);
 
   const navigate = useNavigate();
+  console.log(idHotel);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8000/api/v1/cms/hotel`)
+      .then((res) => {
+        setDataHotel(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const rolesBank = [
     {
-      name: "BNI ",
-      value: "BNI",
-    },
-    {
-      name: "BCA",
+      name: "BCA ",
       value: "BCA",
     },
     {
@@ -39,8 +47,8 @@ export default function CreateUser() {
       value: "BRI",
     },
     {
-      name: "Mandiri",
-      value: "Mandiri",
+      name: "BNI",
+      value: "BNI",
     },
   ];
 
@@ -123,14 +131,17 @@ export default function CreateUser() {
     e.preventDefault();
 
     const res = await axios.post("http://localhost:8000/api/v1/cms/users", {
-      hotel_id: idHotel,
+      hotel: idHotel,
+      image: photo,
       email: email,
+      password,
       username: username,
       firstName: firstName,
       lastName: lastName,
-      password: lastName,
       telephone: telephone,
-      image: photo,
+      name_bank: nameBank,
+      no_rekening: Nomorek,
+      nama_rekening: PemilikRek,
       role: role,
     });
     if (res.data.data) {
@@ -138,7 +149,7 @@ export default function CreateUser() {
       navigate("/admin/aplikasi/kelolaUser");
     } else {
       setMessageError(res.response.data.msg);
-      console.log(res.response.data.msg);
+      console.log(res.response);
     }
   };
 
@@ -160,6 +171,23 @@ export default function CreateUser() {
         </div>
         <div className="edit">
           <form method="POST">
+            {role === "Admin Hotel" ? (
+              <div className="d-flex">
+                <div style={{ width: 162 }}>Nama Hotel</div>
+                <select
+                  name="hotel"
+                  id="hotel"
+                  onChange={(e) => setIdHotel(e.target.value)}
+                >
+                  {dataHotel?.map((item) => (
+                    <option value={item?._id}>{item?.name}</option>
+                  ))}
+                </select>
+              </div>
+            ) : (
+              <></>
+            )}
+
             <div className="form-group d-flex  ">
               <div className="me-2" style={{ width: 180 }}>
                 Email
@@ -206,50 +234,50 @@ export default function CreateUser() {
                   >
                     {textPassword}
                   </Button>
-                  {/* <Button
-                    height={8}
-                    onClick={showPassword}
-                    title={textPassword}
-                    backgroundColor={colors.blue}
-                    color={colors.white}
-                  /> */}
                 </div>
               </div>
             </div>
 
-            <div className="form-group d-flex">
-              <div className="me-2" style={{ width: 180 }}>
-                Username
-              </div>
-              <input
-                className="form-control"
-                placeholder="Input Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </div>
-            <div className="form-group d-flex">
-              <div className="me-2" style={{ width: 180 }}>
-                First Name
-              </div>
-              <input
-                className="form-control"
-                placeholder="Input First Name"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-              />
-            </div>
-            <div className="form-group d-flex">
-              <div className="me-2" style={{ width: 180 }}>
-                Last Name
-              </div>
-              <input
-                className="form-control"
-                placeholder="Input Last Name"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-              />
-            </div>
+            {role === "Admin Hotel" ? (
+              <></>
+            ) : (
+              <>
+                <div className="form-group d-flex">
+                  <div className="me-2" style={{ width: 180 }}>
+                    Username
+                  </div>
+                  <input
+                    className="form-control"
+                    placeholder="Input Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                </div>
+                <div className="form-group d-flex">
+                  <div className="me-2" style={{ width: 180 }}>
+                    First Name
+                  </div>
+                  <input
+                    className="form-control"
+                    placeholder="Input First Name"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                  />
+                </div>
+                <div className="form-group d-flex">
+                  <div className="me-2" style={{ width: 180 }}>
+                    Last Name
+                  </div>
+                  <input
+                    className="form-control"
+                    placeholder="Input Last Name"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
+                </div>
+              </>
+            )}
+
             <div className="form-group d-flex">
               <div className="me-2" style={{ width: 180 }}>
                 Telephone
@@ -263,12 +291,12 @@ export default function CreateUser() {
             </div>
 
             <div className="d-flex mt-2">
-              <div style={{ width: 150 }}>Nomor Rekening</div>
+              <div style={{ width: 160 }}>Nomor Rekening</div>
               <div className="d-flex">
                 <select
                   name="role"
                   id="role"
-                  onChange={(e) => setRole(e.target.value)}
+                  onChange={(e) => setNameBank(e.target.value)}
                 >
                   {rolesBank?.map((item) => (
                     <option value={item.value}>{item.name}</option>
@@ -290,8 +318,8 @@ export default function CreateUser() {
               <input
                 placeholder="Nama Pemilik Rekening..."
                 className="form-control"
-                value={telephone}
-                onChange={(e) => setTelephone(e.target.value)}
+                value={PemilikRek}
+                onChange={(e) => setPemilikRek(e.target.value)}
               />
             </div>
 
@@ -312,7 +340,7 @@ export default function CreateUser() {
               />
             </div>
             <div className="form-group d-flex">
-              <div style={{ width: 150 }}>Role</div>
+              <div style={{ width: 160 }}>Role</div>
               <select
                 name="role"
                 id="role"

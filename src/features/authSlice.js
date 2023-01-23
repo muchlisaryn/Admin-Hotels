@@ -4,8 +4,9 @@ import axios from "axios";
 const initialState = {
   user: null,
   loading: false,
-  userToken: null,
-  username: null,
+  dataUser: localStorage.getItem("admin"),
+  username: localStorage.getItem("username"),
+  role: localStorage.getItem("role"),
   error: false,
   success: false,
 };
@@ -32,10 +33,19 @@ const authSlice = createSlice({
   reducers: {
     setUser: (state, action) => {
       localStorage.setItem("admin", action.payload);
-      state.userToken = localStorage.getItem("admin");
+      state.dataUser = localStorage.getItem("admin");
+    },
+    setUserName: (state, action) => {
+      localStorage.setItem("username", action.payload);
+      state.username = localStorage.getItem("username");
+    },
+    setRole: (state, action) => {
+      localStorage.setItem("role", action.payload);
+      state.role = localStorage.getItem("role");
     },
     removeLogin: (state) => {
       localStorage.removeItem("admin");
+      localStorage.removeItem("username");
       state.user = null;
     },
   },
@@ -62,5 +72,5 @@ const authSlice = createSlice({
       });
   },
 });
-export const { setUser, removeLogin } = authSlice.actions;
+export const { setUser, setUserName, removeLogin } = authSlice.actions;
 export default authSlice.reducer;

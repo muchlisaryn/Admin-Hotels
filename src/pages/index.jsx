@@ -4,6 +4,7 @@ import EditUser from "./EditUser";
 import CreateUser from "./CreateUser";
 import AdminAplikasiRekapitulasi from "./AdminAplikasi/Rekapitulasi";
 import AdminAplikasiDashboard from "./AdminAplikasi/Dashboard";
+import DetailPemesanan from "./AdminHotel/Pemesanan/DetailPemesanan";
 
 export {
   Login,
@@ -12,4 +13,5 @@ export {
   CreateUser,
   AdminAplikasiRekapitulasi,
   AdminAplikasiDashboard,
+  DetailPemesanan,
 };
