@@ -32,7 +32,7 @@ export default function Login() {
       dispatch(setUser(user?.token));
       dispatch(setUserName(user?.firstName));
       dispatch(setRole(user?.role));
-      navigate("/admin/keuangan/pemesanan/pemesanan-baru");
+      navigate("/admin/keuangan/pemesanan");
     } else if (user?.role === "Admin Aplikasi") {
       dispatch(setUser(user?.token));
       dispatch(setUserName(user?.firstName));

@@ -30,6 +30,28 @@ export default function Sidebar() {
           <Logo size={140} />
         </div>
 
+        {role === "Admin Hotel" ? (
+          <>
+            <NavLink
+              className="menu-item border-bottom border-top"
+              style={navLink}
+              to="/admin/Hotel/Pemesanan"
+            >
+              Pemesanan
+            </NavLink>
+
+            <NavLink
+              className="menu-item border-bottom"
+              style={navLink}
+              to="/admin/aplikasi/rekapitulasi"
+            >
+              {`Rekapitulasi`}
+            </NavLink>
+          </>
+        ) : (
+          <></>
+        )}
+
         {role === "Admin Aplikasi" ? (
           <>
             <NavLink
@@ -63,7 +85,7 @@ export default function Sidebar() {
             <NavLink
               className="menu-item border-bottom border-top "
               style={navLink}
-              to="/admin/keuangan/pemesanan/peanan-baru"
+              to="/admin/keuangan/pemesanan"
             >
               Pemesanan
             </NavLink>

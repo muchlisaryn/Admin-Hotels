@@ -1,23 +1,35 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Sidebar, HeaderNav, Navbar } from "../../../component";
+import { Button, Sidebar, HeaderNav, Navbar } from "../../../../component";
 import { useEffect } from "react";
-import { fetchBooking } from "../../../features/getBookingSlice";
+import { fetchBooking } from "../../../../features/getBookingSlice";
 import "./style.css";
 import { useNavigate } from "react-router-dom";
 import {
   convertDate,
   formatDate,
   lengthOfDay,
-} from "../../../utils/formatDate";
+} from "../../../../utils/formatDate";
 
-export default function HotelOrder() {
+export default function NewOrderHotel() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const data = useSelector((state) => state.booking.booking);
   const hotel = useSelector((state) => state.auth.dataUser);
   const filterHotel = data?.filter((item) => item.hotel_id === hotel);
   const hotelName = useSelector((state) => state.auth.username);
-  console.log("ini data booking", data);
+
+  const PemesananBaru = filterHotel?.filter(
+    (data) => data?.statusPayment === "Pembayaran Berhasil di validasi"
+  );
+
+  const trasactionSuccess = filterHotel?.filter(
+    (data) => data?.statusOrder === "Reservasi diterima"
+  );
+
+  const transactionFailed = filterHotel?.filter(
+    (data) =>
+      data?.statusOrder === "Dibatalkan sistem, Kerena kamar tidak tersedia"
+  );
 
   useEffect(() => {
     dispatch(fetchBooking());
@@ -28,7 +40,11 @@ export default function HotelOrder() {
       <Sidebar />
       <div className="w-100 p-3">
         <Navbar name={hotelName} />
-        <div>Pemesanan</div>
+        <HeaderNav
+          orderNew={PemesananBaru?.length}
+          success={trasactionSuccess?.length}
+          failed={transactionFailed?.length}
+        />
         <table className="table-transactions table mt-2">
           <thead>
             <tr>

@@ -23,9 +23,11 @@ export default function DetailPemesanan() {
       {
         statusOrder: "Dibatalkan sistem, Kerena kamar tidak tersedia",
         statusPayment: "Dana kamu akan di kembalikan",
+        currentStatus: "Dibatalkan",
       }
     );
     if (result.data) {
+      navigate("/admin/Hotel/Pemesanan");
     }
   };
 
@@ -40,11 +42,18 @@ export default function DetailPemesanan() {
       confirmButtonText: "Yes, accept!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.put(`http://localhost:8000/api/v1/cms/booking/${id}`, {
-          statusOrder: "Dibatalkan sistem, Kerena kamar tidak tersedia",
-          statusPayment: "Dana akan di kembalikan",
-          currentStatus: "Berhasil",
-        });
+        axios
+          .put(`http://localhost:8000/api/v1/cms/booking/${id}`, {
+            statusOrder: "Reservasi diterima",
+            statusPayment: "Berhasil",
+            currentStatus: "Berhasil",
+          })
+          .then((ress) => {
+            console.log(ress);
+          })
+          .catch((ress) => {
+            console.log(ress);
+          });
         navigate("/admin/Hotel/Pemesanan");
       }
     });
@@ -134,6 +143,7 @@ export default function DetailPemesanan() {
               height={6}
               backgroundColor={colors.red}
               color={colors.white}
+              onClick={reject}
             >
               Reject
             </Button>

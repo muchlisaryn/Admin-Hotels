@@ -1,23 +1,41 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Sidebar, HeaderNav } from "../../../component";
-import { colors } from "../../../utils/colors";
+import { Button, Sidebar, HeaderNav, Navbar } from "../../../../component";
+import { colors } from "../../../../utils/colors";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
-import { fetchBooking } from "../../../features/getBookingSlice";
+import { fetchBooking } from "../../../../features/getBookingSlice";
 import "./style.css";
 
 export default function OrderProses() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   const data = useSelector((state) => state.booking.booking);
+
+  const orderNew = data?.filter(
+    (item) => item.statusPayment === "Pembayaran Sedang di verifikasi"
+  );
+
+  const reservasiFailed = data?.filter(
+    (item) =>
+      item.statusOrder === "Dibatalkan sistem, Kerena kamar tidak tersedia"
+  );
+
   const processOrder = data?.filter(
     (item) => item.statusOrder === "Menunggu Konfirmasi Hotel"
   );
 
-  const openPayment = (image) => {
+  const PaymentFailed = data?.filter(
+    (item) => item.statusPayment === "Pembayaran ditolak"
+  );
+
+  const successOrder = data?.filter(
+    (item) => item.statusOrder === "Reservasi diterima"
+  );
+
+  const openPayment = (order) => {
     Swal.fire({
-      text: `Nomor Rekening : 0213213214 a/n Muchlis`,
-      imageUrl: `http://localhost:8000/${image}`,
+      text: `${order?.customer?.name_bank} : ${order?.customer?.no_rekening} a/n ${order?.customer?.nama_rekening}`,
+      imageUrl: `http://localhost:8000/${order?.image_payment?.name}`,
       imageHeight: 500,
       imageWidth: 250,
       imageAlt: "Image payment",
@@ -32,30 +50,16 @@ export default function OrderProses() {
     <div className="d-flex ">
       <Sidebar />
       <div className="w-100 p-3">
-        <div className="d-flex justify-content-between border-bottom pb-2 mb-2">
-          <div>Hello {`${user?.username}`} </div>
-          <div>
-            {user ? (
-              <Button
-                title="Logout"
-                color={colors.white}
-                backgroundColor={colors.blue}
-              />
-            ) : (
-              <Button
-                title="Login"
-                color={colors.white}
-                backgroundColor={colors.blue}
-              />
-            )}
-          </div>
-        </div>
-
+        <Navbar />
         <div>
-          <HeaderNav />
+          <HeaderNav
+            OrderFailed={reservasiFailed?.length}
+            process={processOrder?.length}
+            orderNew={orderNew?.length}
+            payFailed={PaymentFailed?.length}
+            success={successOrder?.length}
+          />
         </div>
-
-        <div>Pemesanan</div>
         <table className="table-transactions table mt-2">
           <thead>
             <tr>
@@ -94,7 +98,7 @@ export default function OrderProses() {
                 <td className="item-table">{list?.statusOrder}</td>
                 <td className="item-table">{list.statusPayment}</td>
                 <td className="item-table bukti-Pembayaran">
-                  <div onClick={() => openPayment(list.image_payment.name)}>
+                  <div onClick={() => openPayment(list)}>
                     Lihat Bukti Pembayaran
                   </div>
                 </td>

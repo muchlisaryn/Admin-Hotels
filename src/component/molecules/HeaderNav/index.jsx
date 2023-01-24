@@ -2,22 +2,15 @@ import { NavLink } from "react-router-dom";
 import "./style.css";
 import { useSelector } from "react-redux";
 
-export default function HeaderNav() {
-  const data = useSelector((state) => state.booking.booking);
-
-  const newOrder = data?.filter(
-    (item) => item.statusPayment === "Pembayaran Sedang di verifikasi"
-  );
-
-  const processOrder = data?.filter(
-    (item) => item.statusOrder === "Menunggu Konfirmasi Hotel"
-  );
-
-  const PaymentFailed = data?.filter(
-    (item) => item.statusPayment === "Pembayaran ditolak"
-  );
-
-  console.log("ini new Order", newOrder);
+export default function HeaderNav({
+  orderNew,
+  success,
+  failed,
+  OrderFailed,
+  process,
+  payFailed,
+}) {
+  const role = useSelector((state) => state.auth.role);
 
   const navLink = ({ isActive }) => {
     return {
@@ -28,48 +21,75 @@ export default function HeaderNav() {
 
   return (
     <div className="header-nav">
-      <NavLink
-        style={navLink}
-        to="/admin/keuangan/pemesanan/pemesanan-baru"
-        className="nav-item"
-      >
-        {`Pemesanan Baru (${newOrder?.length})`}
-      </NavLink>
-      <NavLink
-        style={navLink}
-        to="/admin/keuangan/pemesanan/Diproses"
-        className="nav-item"
-      >
-        {`Diproses (${processOrder?.length})`}
-      </NavLink>
-      <NavLink
-        style={navLink}
-        to="/admin/keuangan/berhasil"
-        className="nav-item"
-      >
-        Berhasil
-      </NavLink>
-      <NavLink
-        style={navLink}
-        to="/admin/keuangan/pemesanan-ditolak"
-        className="nav-item"
-      >
-        Reservasi ditolak
-      </NavLink>
-      <NavLink
-        style={navLink}
-        to="/admin/keuangan/pembayaran-ditolak"
-        className="nav-item"
-      >
-        {` Pembayaran ditolak (${PaymentFailed?.length})`}
-      </NavLink>
-      <NavLink
-        style={navLink}
-        to="/admin/keuangan/history"
-        className="nav-item"
-      >
-        History
-      </NavLink>
+      {role === "Admin Hotel" ? (
+        <>
+          <NavLink
+            style={navLink}
+            to="/admin/Hotel/Pemesanan/new-order"
+            className="nav-item"
+          >
+            {`Pemesanan Baru (${orderNew})`}
+          </NavLink>
+          <NavLink
+            style={navLink}
+            to="/admin/Hotel/Pemesanan/success-order"
+            className="nav-item"
+          >
+            {`Pemesanan Berhasil (${success})`}
+          </NavLink>
+          <NavLink
+            style={navLink}
+            to="/admin/Hotel/Pemesanan/failed-order"
+            className="nav-item"
+          >
+            {`Pemesanan ditolak (${failed})`}
+          </NavLink>
+        </>
+      ) : (
+        <></>
+      )}
+
+      {role === "Admin Keuangan" ? (
+        <>
+          <NavLink
+            style={navLink}
+            to="/admin/keuangan/pemesanan/pemesanan-baru"
+            className="nav-item"
+          >
+            {`Pemesanan Baru (${orderNew})`}
+          </NavLink>
+          <NavLink
+            style={navLink}
+            to="/admin/keuangan/pemesanan/Diproses"
+            className="nav-item"
+          >
+            {`Diproses (${process})`}
+          </NavLink>
+          <NavLink
+            style={navLink}
+            to="/admin/keuangan/pemesanan/Berhasil"
+            className="nav-item"
+          >
+            Berhasil ({success})
+          </NavLink>
+          <NavLink
+            style={navLink}
+            to="/admin/keuangan/pemesanan/Reservasi-ditolak"
+            className="nav-item"
+          >
+            {`Reservasi ditolak (${OrderFailed})`}
+          </NavLink>
+          <NavLink
+            style={navLink}
+            to="/admin/keuangan/pembayaran-ditolak"
+            className="nav-item"
+          >
+            {` Pembayaran ditolak (${payFailed})`}
+          </NavLink>
+        </>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

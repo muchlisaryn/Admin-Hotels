@@ -10,6 +10,11 @@ import {
   AdminAplikasiRekapitulasi,
   AdminAplikasiDashboard,
   DetailPemesanan,
+  NewOrderHotel,
+  SuccessOrderHotel,
+  FailedOrderHotel,
+  ReservasiReject,
+  HomeKeuangan,
 } from "./pages";
 import {
   EditRekening,
@@ -17,8 +22,9 @@ import {
   NewOrder,
   OrderProses,
   PaymentFailed,
+  TransactionsSuccess,
 } from "./pages/AdminKeuangan";
-import HotelOrder from "./pages/AdminHotel/Pemesanan";
+import HomeHotel from "./pages/AdminHotel/Home";
 
 function App() {
   return (
@@ -37,9 +43,15 @@ function App() {
         <Route path="user/edit-user/:id" element={<EditUser />} />
         <Route path="user/create-user" element={<CreateUser />} />
 
+        <Route path="/admin/keuangan/pemesanan" element={<HomeKeuangan />} />
+
         <Route
           path="/admin/keuangan/pemesanan/pemesanan-baru"
           element={<NewOrder />}
+        />
+        <Route
+          path="/admin/keuangan/pemesanan/Berhasil"
+          element={<TransactionsSuccess />}
         />
         <Route
           path="/admin/keuangan/pemesanan/Diproses"
@@ -50,6 +62,10 @@ function App() {
           element={<PaymentFailed />}
         />
         <Route
+          path="/admin/keuangan/pemesanan/Reservasi-ditolak"
+          element={<ReservasiReject />}
+        />
+        <Route
           path="/admin/keuangan/Kelola-keuangan"
           element={<KelolaKeuangan />}
         />
@@ -57,7 +73,20 @@ function App() {
           path="/admin/keuangan/Kelola-keuangan/edit-rekening/:id"
           element={<EditRekening />}
         />
-        <Route path="/admin/Hotel/Pemesanan" element={<HotelOrder />} />
+
+        <Route path="/admin/Hotel/Pemesanan" element={<HomeHotel />} />
+        <Route
+          path="/admin/Hotel/Pemesanan/new-order"
+          element={<NewOrderHotel />}
+        />
+        <Route
+          path="/admin/Hotel/Pemesanan/success-order"
+          element={<SuccessOrderHotel />}
+        />
+        <Route
+          path="/admin/Hotel/Pemesanan/failed-order"
+          element={<FailedOrderHotel />}
+        />
         <Route
           path="/admin/Hotel/Pemesanan/detail-pemesanan/:id"
           element={<DetailPemesanan />}
