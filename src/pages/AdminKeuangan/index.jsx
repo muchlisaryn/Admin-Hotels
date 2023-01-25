@@ -5,6 +5,8 @@ import KelolaKeuangan from "./KelolaKeuangan";
 import EditRekening from "./KelolaKeuangan/EditRekening";
 import TransactionsSuccess from "./Pemesanan/Berhasil";
 import RekapitulasiKeuangan from "./Rekapitulasi";
+import EditFee from "./KelolaKeuangan/EditFee";
+import DetailRekapitulasi from "./DetailRekapitulasi";
 
 export {
   NewOrder,
@@ -14,4 +16,6 @@ export {
   EditRekening,
   TransactionsSuccess,
   RekapitulasiKeuangan,
+  EditFee,
+  DetailRekapitulasi,
 };

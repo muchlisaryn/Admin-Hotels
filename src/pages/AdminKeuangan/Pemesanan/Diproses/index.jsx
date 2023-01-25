@@ -32,6 +32,8 @@ export default function OrderProses() {
     (item) => item.statusOrder === "Reservasi diterima"
   );
 
+  console.log(processOrder);
+
   const openPayment = (order) => {
     Swal.fire({
       text: `${order?.customer?.name_bank} : ${order?.customer?.no_rekening} a/n ${order?.customer?.nama_rekening}`,

@@ -7,11 +7,12 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { fetchBooking } from "../../../../features/getBookingSlice";
 import "./style.css";
+import { fetchFee } from "../../../../features/getFeeSlice";
 
 export default function NewOrder() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.user);
   const data = useSelector((state) => state.booking.booking);
+  const fee = useSelector((state) => state.fee.fee);
 
   const newOrder = data?.filter(
     (item) => item.statusPayment === "Pembayaran Sedang di verifikasi"
@@ -48,9 +49,10 @@ export default function NewOrder() {
 
   useEffect(() => {
     dispatch(fetchBooking());
+    dispatch(fetchFee());
   }, []);
 
-  const accept = async (id) => {
+  const accept = async (data) => {
     Swal.fire({
       title: "Are you sure accept payment?",
       text: "You won't be able to revert this!",
@@ -61,9 +63,12 @@ export default function NewOrder() {
       confirmButtonText: "Yes, Accept !",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.put(`http://localhost:8000/api/v1/cms/booking/${id}`, {
+        axios.put(`http://localhost:8000/api/v1/cms/booking/${data?._id}`, {
           statusPayment: "Pembayaran Berhasil di validasi",
           statusOrder: "Menunggu Konfirmasi Hotel",
+
+          charge_pay:
+            data?.Total_payment - (data?.Total_payment * fee.amount) / 100,
         });
         window.location.reload(false);
       }
@@ -155,7 +160,7 @@ export default function NewOrder() {
                       fontSize={12}
                       color={colors.white}
                       backgroundColor={colors.blue}
-                      onClick={() => accept(list._id)}
+                      onClick={() => accept(list)}
                     />
                   </div>
                   <div>

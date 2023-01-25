@@ -92,7 +92,14 @@ export default function Sidebar() {
               style={navLink}
               to="/admin/keuangan/rekapitulasi"
             >
-              Rekapitulasi
+              Rekapitulasi Order
+            </NavLink>
+            <NavLink
+              className="menu-item border-bottom"
+              style={navLink}
+              to="/admin/keuangan/rekapitulasi-hotel"
+            >
+              Rekapitulasi Hotel
             </NavLink>
             <NavLink
               className="menu-item border-bottom"

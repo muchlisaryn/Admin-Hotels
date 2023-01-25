@@ -17,6 +17,8 @@ import {
   HomeKeuangan,
 } from "./pages";
 import {
+  DetailRekapitulasi,
+  EditFee,
   EditRekening,
   KelolaKeuangan,
   NewOrder,
@@ -26,6 +28,7 @@ import {
   TransactionsSuccess,
 } from "./pages/AdminKeuangan";
 import HomeHotel from "./pages/AdminHotel/Home";
+import RekapitulasiOrder from "./pages/AdminKeuangan/RekapitulasiOrder";
 
 function App() {
   return (
@@ -46,6 +49,14 @@ function App() {
         <Route
           path="/admin/keuangan/rekapitulasi"
           element={<RekapitulasiKeuangan />}
+        />
+        <Route
+          path="/admin/keuangan/rekapitulasi/detail-rekapitulasi/:id"
+          element={<DetailRekapitulasi />}
+        />
+        <Route
+          path="/admin/keuangan/rekapitulasi-hotel"
+          element={<RekapitulasiOrder />}
         />
         <Route path="/admin/keuangan/pemesanan" element={<HomeKeuangan />} />
 
@@ -77,7 +88,10 @@ function App() {
           path="/admin/keuangan/Kelola-keuangan/edit-rekening/:id"
           element={<EditRekening />}
         />
-
+        <Route
+          path="/admin/keuangan/Kelola-keuangan/edit-fee/:id"
+          element={<EditFee />}
+        />
         <Route path="/admin/Hotel/Pemesanan" element={<HomeHotel />} />
         <Route
           path="/admin/Hotel/Pemesanan/new-order"

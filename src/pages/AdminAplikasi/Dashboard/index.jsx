@@ -54,7 +54,7 @@ export default function AdminAplikasiDashboard() {
 
           <div className="border rounded p-5">
             <div>
-              <div>TOTAL USER</div>
+              <div>Success Order</div>
               <div>1</div>
             </div>
           </div>

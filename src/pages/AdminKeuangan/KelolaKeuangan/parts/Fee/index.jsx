@@ -7,8 +7,6 @@ import { colors } from "../../../../../utils/colors";
 export default function Fee() {
   const [data, setData] = useState({});
 
-  console.log(data);
-
   useEffect(() => {
     axios.get(`http://localhost:8000/api/v1/cms/fee`).then((res) => {
       setData(res.data.data[0]);
@@ -38,7 +36,9 @@ export default function Fee() {
             <td>{data?.jenis}</td>
             <td>{data?.amount}%</td>
             <td style={{ width: 100 }}>
-              <Link to="/">
+              <Link
+                to={`/admin/keuangan/Kelola-keuangan/edit-fee/${data?._id}`}
+              >
                 <Button color={colors.white} backgroundColor={colors.blue}>
                   EDIT
                 </Button>
