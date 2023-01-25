@@ -1,7 +1,5 @@
-import Button from "../../Button";
 import Logo from "../../Logo";
 import "./style.css";
-import { colors } from "../../../utils/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { fetchBooking } from "../../../features/getBookingSlice";
@@ -92,7 +90,7 @@ export default function Sidebar() {
             <NavLink
               className="menu-item border-bottom"
               style={navLink}
-              to="/keuangan"
+              to="/admin/keuangan/rekapitulasi"
             >
               Rekapitulasi
             </NavLink>

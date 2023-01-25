@@ -4,6 +4,7 @@ import PaymentFailed from "./PembayaranDitolak";
 import KelolaKeuangan from "./KelolaKeuangan";
 import EditRekening from "./KelolaKeuangan/EditRekening";
 import TransactionsSuccess from "./Pemesanan/Berhasil";
+import RekapitulasiKeuangan from "./Rekapitulasi";
 
 export {
   NewOrder,
@@ -12,4 +13,5 @@ export {
   KelolaKeuangan,
   EditRekening,
   TransactionsSuccess,
+  RekapitulasiKeuangan,
 };

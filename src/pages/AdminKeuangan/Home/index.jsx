@@ -36,7 +36,7 @@ export default function HomeKeuangan() {
           <Button
             color={colors.white}
             backgroundColor={colors.blue}
-            onClick={() => navigate("/admin/Hotel/Pemesanan/new-order")}
+            onClick={() => navigate("/admin/keuangan/pemesanan/pemesanan-baru")}
           >
             <div className="p-5 d-flex justify-content-between ">
               <div>Pemesanan Baru</div>
@@ -46,7 +46,11 @@ export default function HomeKeuangan() {
         </div>
 
         <div className="mt-3">
-          <Button color={colors.white} backgroundColor={colors.yellow}>
+          <Button
+            color={colors.white}
+            backgroundColor={colors.yellow}
+            onClick={() => navigate("/admin/keuangan/pemesanan/Diproses")}
+          >
             <div className="p-5 d-flex justify-content-between ">
               <div>Pemesanan Diproses</div>
               <div>{processOrder?.length}</div>
@@ -55,7 +59,11 @@ export default function HomeKeuangan() {
         </div>
 
         <div className="mt-3">
-          <Button color={colors.white} backgroundColor={colors.green}>
+          <Button
+            color={colors.white}
+            backgroundColor={colors.green}
+            onClick={() => navigate("/admin/keuangan/pemesanan/Berhasil")}
+          >
             <div className="p-5 d-flex justify-content-between ">
               <div>Pemesanan Berhasil</div>
               <div>{successOrder?.length}</div>

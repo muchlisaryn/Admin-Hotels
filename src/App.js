@@ -22,6 +22,7 @@ import {
   NewOrder,
   OrderProses,
   PaymentFailed,
+  RekapitulasiKeuangan,
   TransactionsSuccess,
 } from "./pages/AdminKeuangan";
 import HomeHotel from "./pages/AdminHotel/Home";
@@ -42,7 +43,10 @@ function App() {
         />
         <Route path="user/edit-user/:id" element={<EditUser />} />
         <Route path="user/create-user" element={<CreateUser />} />
-
+        <Route
+          path="/admin/keuangan/rekapitulasi"
+          element={<RekapitulasiKeuangan />}
+        />
         <Route path="/admin/keuangan/pemesanan" element={<HomeKeuangan />} />
 
         <Route
