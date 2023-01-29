@@ -45,7 +45,11 @@ export default function HomeHotel() {
         </div>
 
         <div className="mt-4">
-          <Button color={colors.white} backgroundColor={colors.green}>
+          <Button
+            color={colors.white}
+            backgroundColor={colors.green}
+            onClick={() => navigate("/admin/Hotel/Pemesanan/success-order")}
+          >
             <div className="p-5 d-flex justify-content-between ">
               <div>Pemesanan Berhasil</div>
               <div>{trasactionSuccess?.length}</div>

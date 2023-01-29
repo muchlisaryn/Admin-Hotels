@@ -8,18 +8,18 @@ import { useNavigate, useParams } from "react-router-dom";
 import { convertDate, lengthOfDay } from "../../../utils/formatDate";
 import { fetchFee } from "../../../features/getFeeSlice";
 
-export default function DetailRekapitulasi() {
+export default function DetailRekapitulasiHotel() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
   const [data, setData] = useState();
   const fee = useSelector((state) => state.fee.fee);
 
+  const feeApp = (data?.Total_payment * fee?.amount) / 100;
+
   useEffect(() => {
     dispatch(fetchFee());
   });
-
-  const feeApp = (data?.Total_payment * fee.amount) / 100;
 
   useEffect(() => {
     axios
@@ -40,7 +40,7 @@ export default function DetailRekapitulasi() {
         <div className="mt-2 w-25">
           <Button
             title="Back"
-            onClick={() => navigate("/admin/keuangan/rekapitulasi")}
+            onClick={() => navigate("/admin/Hotel/Rekapitulasi")}
             color={colors.white}
             backgroundColor={colors.blue}
           />

@@ -1,9 +1,10 @@
 import { useSelector } from "react-redux";
-import { Sidebar, Navbar } from "../../../component";
+import { Sidebar, Navbar, Button } from "../../../component";
 import { useState, useEffect } from "react";
 import { colors } from "../../../utils/colors";
 
 import { formatIDR } from "../../../utils/formatIDR";
+import { Link } from "react-router-dom";
 
 export default function RekapitulasiKeuangan() {
   const data = useSelector((state) => state.booking.booking);
@@ -99,7 +100,20 @@ export default function RekapitulasiKeuangan() {
             <tbody>
               {successOrder?.map((list) => (
                 <tr>
-                  <th scope="row">#{list?.order_id}</th>
+                  <th scope="row" className="d-flex">
+                    <div>#{list?.order_id}</div>{" "}
+                    <div className="ms-2">
+                      <Link
+                        to={`/admin/keuangan/rekapitulasi/detail-rekapitulasi/${list._id}`}
+                      >
+                        <Button
+                          title="Detail"
+                          color={colors.white}
+                          backgroundColor={colors.blue}
+                        />
+                      </Link>
+                    </div>
+                  </th>
                   <td>{list?.transaction_time}</td>
                   <td>{list?.hotel_name}</td>
                   <td>{formatIDR.format(list?.Total_payment)}</td>

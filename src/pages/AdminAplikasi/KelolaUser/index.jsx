@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button, Navbar, Sidebar } from "../../../component";
@@ -13,7 +13,6 @@ export default function AdminUser() {
   const name = useSelector((state) => state.auth.username);
   const loading = useSelector((state) => state.user.pending);
 
-  const [role, setRole] = useState();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -36,29 +35,6 @@ export default function AdminUser() {
       }
     });
   };
-
-  const roles = [
-    {
-      name: "All",
-      value: "all",
-    },
-    {
-      name: "User",
-      value: "user",
-    },
-    {
-      name: "Admin Aplikasi",
-      value: "Admin Aplikasi",
-    },
-    {
-      name: "Admin Keuangan",
-      value: "Admin Keuangan",
-    },
-    {
-      name: "Admin Hotel",
-      value: "Admin Hotel",
-    },
-  ];
 
   return (
     <div className="d-flex ">
@@ -95,41 +71,44 @@ export default function AdminUser() {
             <div>Loading...</div>
           ) : (
             <tbody>
-              {data?.map((item) => (
-                <tr key={item._id}>
-                  <th scope="row">
-                    <img
-                      src={`http://localhost:8000/${item?.image?.name}`}
-                      style={{ width: 30, height: 30 }}
-                    />
-                  </th>
-                  <td>{item?.role}</td>
-                  <td>{item?.username}</td>
-                  <td>{item?.email}</td>
+              {data
+                ?.filter((list) => list?.role !== "Admin Hotel")
+                .map((item) => (
+                  <tr key={item._id}>
+                    <th scope="row">
+                      <img
+                        src={`http://localhost:8000/${item?.image?.name}`}
+                        style={{ width: 30, height: 30 }}
+                        alt="profile"
+                      />
+                    </th>
+                    <td>{item?.role}</td>
+                    <td>{item?.username}</td>
+                    <td>{item?.email}</td>
 
-                  <td className="d-flex">
-                    <div className="me-2">
-                      <Link to={`/user/edit-user/${item._id}`}>
+                    <td className="d-flex">
+                      <div className="me-2">
+                        <Link to={`/user/edit-user/${item._id}`}>
+                          <Button
+                            title="Edit"
+                            backgroundColor={colors.blue}
+                            color={colors.white}
+                            height={5}
+                          />
+                        </Link>
+                      </div>
+                      <div>
                         <Button
-                          title="Edit"
-                          backgroundColor={colors.blue}
+                          title="Hapus"
+                          backgroundColor={colors.red}
                           color={colors.white}
                           height={5}
+                          onClick={() => delteUser(item._id)}
                         />
-                      </Link>
-                    </div>
-                    <div>
-                      <Button
-                        title="Hapus"
-                        backgroundColor={colors.red}
-                        color={colors.white}
-                        height={5}
-                        onClick={() => delteUser(item._id)}
-                      />
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           )}
         </table>

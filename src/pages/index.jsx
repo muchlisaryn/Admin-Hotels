@@ -10,6 +10,8 @@ import SuccessOrderHotel from "./AdminHotel/Pemesanan/PemesananBerhasil";
 import FailedOrderHotel from "./AdminHotel/Pemesanan/PemesananFailed";
 import ReservasiReject from "./AdminKeuangan/Pemesanan/ReservasiDitolak";
 import HomeKeuangan from "./AdminKeuangan/Home";
+import RekapitulasiOrderHotel from "./AdminHotel/Rekapitulasi";
+import DetailRekapitulasiHotel from "./AdminHotel/DetailRekapitulasi";
 
 export {
   Login,
@@ -24,4 +26,6 @@ export {
   FailedOrderHotel,
   ReservasiReject,
   HomeKeuangan,
+  RekapitulasiOrderHotel,
+  DetailRekapitulasiHotel,
 };

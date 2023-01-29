@@ -15,6 +15,8 @@ import {
   FailedOrderHotel,
   ReservasiReject,
   HomeKeuangan,
+  RekapitulasiOrderHotel,
+  DetailRekapitulasiHotel,
 } from "./pages";
 import {
   DetailRekapitulasi,
@@ -93,6 +95,14 @@ function App() {
           element={<EditFee />}
         />
         <Route path="/admin/Hotel/Pemesanan" element={<HomeHotel />} />
+        <Route
+          path="/admin/Hotel/Rekapitulasi"
+          element={<RekapitulasiOrderHotel />}
+        />
+        <Route
+          path="/admin/Hotel/Rekapitulasi/detail-rekapitulasi/:id"
+          element={<DetailRekapitulasiHotel />}
+        />
         <Route
           path="/admin/Hotel/Pemesanan/new-order"
           element={<NewOrderHotel />}

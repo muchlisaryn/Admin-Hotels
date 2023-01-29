@@ -41,7 +41,7 @@ export default function Sidebar() {
             <NavLink
               className="menu-item border-bottom"
               style={navLink}
-              to="/admin/aplikasi/rekapitulasi"
+              to="/admin/Hotel/Rekapitulasi"
             >
               {`Rekapitulasi`}
             </NavLink>
@@ -52,13 +52,13 @@ export default function Sidebar() {
 
         {role === "Admin Aplikasi" ? (
           <>
-            <NavLink
+            {/* <NavLink
               className="menu-item border-bottom border-top"
               style={navLink}
               to="/admin/aplikasi/Dashboard"
             >
               Dashboard
-            </NavLink>
+            </NavLink> */}
             <NavLink
               className="menu-item border-bottom"
               style={navLink}
