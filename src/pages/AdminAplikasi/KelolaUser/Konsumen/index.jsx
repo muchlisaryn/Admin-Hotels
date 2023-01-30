@@ -2,14 +2,14 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Button, Navbar, Sidebar } from "../../../component";
-import { fetchUsers } from "../../../features/getUserSlice";
+import { Button, Navbar, Sidebar } from "../../../../component";
+import { fetchUsers } from "../../../../features/getUserSlice";
 import Swal from "sweetalert2";
-import { colors } from "../../../utils/colors";
+import { colors } from "../../../../utils/colors";
 import { AiOutlineUserAdd } from "react-icons/ai";
-import Header from "../parts/Header";
+import Header from "../../parts/Header";
 
-export default function AdminUser() {
+export default function AdminUserKonsumen() {
   const data = useSelector((state) => state.user.users);
   const name = useSelector((state) => state.auth.username);
   const loading = useSelector((state) => state.user.pending);
@@ -78,7 +78,7 @@ export default function AdminUser() {
           ) : (
             <tbody>
               {data
-                ?.filter((list) => list?.role !== "Admin Hotel")
+                ?.filter((list) => list?.role === "user")
                 .map((item) => (
                   <tr key={item._id}>
                     <th scope="row">

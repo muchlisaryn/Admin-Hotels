@@ -12,6 +12,10 @@ import ReservasiReject from "./AdminKeuangan/Pemesanan/ReservasiDitolak";
 import HomeKeuangan from "./AdminKeuangan/Home";
 import RekapitulasiOrderHotel from "./AdminHotel/Rekapitulasi";
 import DetailRekapitulasiHotel from "./AdminHotel/DetailRekapitulasi";
+import AdminUserHotel from "./AdminAplikasi/KelolaUser/Hotel";
+import AdminUserKonsumen from "./AdminAplikasi/KelolaUser/Konsumen";
+import Admin from "./AdminAplikasi/KelolaUser/Admin";
+import PengembalianDana from "./AdminKeuangan/Pemesanan/ReservasiDitolak/PengembalianDana";
 
 export {
   Login,
@@ -28,4 +32,8 @@ export {
   HomeKeuangan,
   RekapitulasiOrderHotel,
   DetailRekapitulasiHotel,
+  AdminUserHotel,
+  AdminUserKonsumen,
+  Admin,
+  PengembalianDana,
 };

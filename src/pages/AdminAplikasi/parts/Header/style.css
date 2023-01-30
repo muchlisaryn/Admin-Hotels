@@ -1,0 +1,16 @@
+.sidebar {
+  border-right: 1px solid #aeaeae;
+  height: 100vh;
+}
+
+.menu-item {
+  text-align: center;
+  padding: 10px;
+  text-decoration: none;
+  color: #aeaeae;
+}
+
+.menu-item:hover {
+  background-color: #0364ce;
+  color: white;
+}

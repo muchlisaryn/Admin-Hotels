@@ -17,6 +17,10 @@ import {
   HomeKeuangan,
   RekapitulasiOrderHotel,
   DetailRekapitulasiHotel,
+  AdminUserHotel,
+  AdminUserKonsumen,
+  Admin,
+  PengembalianDana,
 } from "./pages";
 import {
   DetailRekapitulasi,
@@ -37,7 +41,19 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/admin/aplikasi/kelolaUser" element={<AdminUser />} />
+        <Route
+          path="/admin/aplikasi/kelolaUser/all-user"
+          element={<AdminUser />}
+        />
+        <Route
+          path="/admin/aplikasi/kelolaUser/hotel"
+          element={<AdminUserHotel />}
+        />
+        <Route
+          path="/admin/aplikasi/kelolaUser/konsumen"
+          element={<AdminUserKonsumen />}
+        />
+        <Route path="/admin/aplikasi/kelolaUser/Admin" element={<Admin />} />
         <Route
           path="/admin/aplikasi/rekapitulasi"
           element={<AdminAplikasiRekapitulasi />}
@@ -81,6 +97,10 @@ function App() {
         <Route
           path="/admin/keuangan/pemesanan/Reservasi-ditolak"
           element={<ReservasiReject />}
+        />
+        <Route
+          path="/admin/keuangan/pemesanan/PengembalianDana/:id"
+          element={<PengembalianDana />}
         />
         <Route
           path="/admin/keuangan/Kelola-keuangan"

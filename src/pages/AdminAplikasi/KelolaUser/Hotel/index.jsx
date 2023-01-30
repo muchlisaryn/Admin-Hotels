@@ -2,14 +2,14 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Button, Navbar, Sidebar } from "../../../component";
-import { fetchUsers } from "../../../features/getUserSlice";
+import { Button, Navbar, Sidebar } from "../../../../component";
+import { fetchUsers } from "../../../../features/getUserSlice";
 import Swal from "sweetalert2";
-import { colors } from "../../../utils/colors";
+import { colors } from "../../../../utils/colors";
 import { AiOutlineUserAdd } from "react-icons/ai";
-import Header from "../parts/Header";
+import Header from "../../parts/Header";
 
-export default function AdminUser() {
+export default function AdminUserHotel() {
   const data = useSelector((state) => state.user.users);
   const name = useSelector((state) => state.auth.username);
   const loading = useSelector((state) => state.user.pending);
@@ -39,8 +39,10 @@ export default function AdminUser() {
 
   return (
     <div className="d-flex ">
-      <Sidebar />
-      <div className="w-100 p-3">
+      <div className="position-fixed col-2">
+        <Sidebar />
+      </div>
+      <div className="w-100 p-2 col offset-2">
         <Navbar name={name} />
         <div className="d-flex ">
           <div className="mt-2 mb-2">
@@ -67,10 +69,10 @@ export default function AdminUser() {
                   <div>Role</div>
                 </div>
               </th>
-              <th scope="col">username</th>
-              <th scope="col">email</th>
+              <th scope="col">Nama Hotel</th>
+              <th scope="col">Email</th>
 
-              <th scope="col">actions</th>
+              <th scope="col">Actions</th>
             </tr>
           </thead>
           {loading ? (
@@ -78,7 +80,7 @@ export default function AdminUser() {
           ) : (
             <tbody>
               {data
-                ?.filter((list) => list?.role !== "Admin Hotel")
+                ?.filter((list) => list?.role === "Admin Hotel")
                 .map((item) => (
                   <tr key={item._id}>
                     <th scope="row">
@@ -89,7 +91,7 @@ export default function AdminUser() {
                       />
                     </th>
                     <td>{item?.role}</td>
-                    <td>{item?.username}</td>
+                    <td>{item?.hotel?.name}</td>
                     <td>{item?.email}</td>
 
                     <td className="d-flex">

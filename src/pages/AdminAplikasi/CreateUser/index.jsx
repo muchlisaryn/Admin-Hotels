@@ -5,8 +5,11 @@ import { Button, Sidebar } from "../../../component";
 import { colors } from "../../../utils/colors";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import "./style.css";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUsers } from "../../../features/getUserSlice";
 
 export default function CreateUser() {
+  const dispatch = useDispatch();
   const [idHotel, setIdHotel] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -23,6 +26,10 @@ export default function CreateUser() {
   const [showPw, setShowPw] = useState("password");
   const [textPassword, setTextPassword] = useState(<AiFillEye />);
   const [dataHotel, setDataHotel] = useState([]);
+  const datas = useSelector((state) => state.user.users);
+  useEffect(() => {
+    dispatch(fetchUsers(`http://localhost:8000/api/v1/cms/users`));
+  }, []);
 
   const navigate = useNavigate();
   console.log(idHotel);
@@ -146,7 +153,7 @@ export default function CreateUser() {
     });
     if (res.data.data) {
       console.log("berhasil");
-      navigate("/admin/aplikasi/kelolaUser");
+      navigate("/admin/aplikasi/kelolaUser/all-user");
     } else {
       setMessageError(res.response.data.msg);
       console.log(res.response);

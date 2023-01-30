@@ -37,7 +37,7 @@ export default function Login() {
       dispatch(setUser(user?.token));
       dispatch(setUserName(user?.firstName));
       dispatch(setRole(user?.role));
-      navigate("/admin/aplikasi/kelolaUser");
+      navigate("/admin/aplikasi/kelolaUser/all-user");
     } else if (user?.role === "Admin Hotel") {
       dispatch(setUser(user?.hotel?.hotel_id));
       dispatch(setUserName(user?.hotel?.name));

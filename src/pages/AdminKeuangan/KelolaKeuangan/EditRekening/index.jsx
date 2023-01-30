@@ -13,10 +13,6 @@ export default function EditRekening() {
   const [nama, setName] = useState("");
   const [noRekening, setNoRekening] = useState("");
 
-  console.log("bank", bank);
-  console.log("nama", nama);
-  console.log("norek", noRekening);
-
   const role = [
     {
       name: "BCA",

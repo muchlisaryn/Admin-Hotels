@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Sidebar, HeaderNav, Navbar } from "../../../../component";
 import { colors } from "../../../../utils/colors";
 import Swal from "sweetalert2";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useEffect } from "react";
 import { fetchBooking } from "../../../../features/getBookingSlice";
 import "./style.css";
+import { useNavigate } from "react-router-dom";
 
 export default function ReservasiReject() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const data = useSelector((state) => state.booking.booking);
 
   const orderNew = data?.filter(
@@ -46,46 +47,6 @@ export default function ReservasiReject() {
   useEffect(() => {
     dispatch(fetchBooking());
   }, []);
-
-  const accept = async (id) => {
-    Swal.fire({
-      title: "Are you sure accept payment?",
-      text: "You won't be able to revert this!",
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, Accept !",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axios.put(`http://localhost:8000/api/v1/cms/booking/${id}`, {
-          statusPayment: "Pembayaran Berhasil di validasi",
-          statusOrder: "Menunggu Konfirmasi Hotel",
-        });
-        window.location.reload(false);
-      }
-    });
-  };
-
-  const reject = async (id) => {
-    Swal.fire({
-      title: "Are you sure reject payment?",
-      text: "You won't be able to revert this!",
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, reject !",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axios.put(`http://localhost:8000/api/v1/cms/booking/${id}`, {
-          currentStatus: "Dibatalkan",
-          statusPayment: "Pembayaran ditolak",
-        });
-        window.location.reload(false);
-      }
-    });
-  };
 
   return (
     <div className="d-flex ">
@@ -138,15 +99,37 @@ export default function ReservasiReject() {
                   </div>
                 </td>
                 <td className="d-flex" style={{ height: 70 }}>
-                  <div className="me-2">
-                    <Button
-                      title="Kembalikan Dana"
-                      fontSize={12}
-                      color={colors.white}
-                      backgroundColor={colors.blue}
-                      onClick={() => accept(list._id)}
-                    />
-                  </div>
+                  {list?.statusPayment === "Dana sudah di kembalikan" ? (
+                    <div className="me-2">
+                      <Button
+                        title="Dana Berhasil dikembalikan"
+                        fontSize={12}
+                        color={colors.white}
+                        backgroundColor={colors.green}
+                        onClick={() =>
+                          navigate(
+                            `/admin/keuangan/pemesanan/PengembalianDana/${list?._id}`
+                          )
+                        }
+                        height={10}
+                      />
+                    </div>
+                  ) : (
+                    <div className="me-2">
+                      <Button
+                        title="Kembalikan Dana"
+                        fontSize={12}
+                        color={colors.white}
+                        backgroundColor={colors.blue}
+                        onClick={() =>
+                          navigate(
+                            `/admin/keuangan/pemesanan/PengembalianDana/${list?._id}`
+                          )
+                        }
+                        height={10}
+                      />
+                    </div>
+                  )}
                 </td>
               </tr>
             ))}
