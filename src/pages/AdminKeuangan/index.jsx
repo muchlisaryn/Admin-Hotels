@@ -4,7 +4,7 @@ import PaymentFailed from "./PembayaranDitolak";
 import KelolaKeuangan from "./KelolaKeuangan";
 import EditRekening from "./KelolaKeuangan/EditRekening";
 import TransactionsSuccess from "./Pemesanan/Berhasil";
-import RekapitulasiKeuangan from "./Rekapitulasi";
+import RekapitulasiKeuangan from "./RekapitulasiHotel";
 import EditFee from "./KelolaKeuangan/EditFee";
 import DetailRekapitulasi from "./DetailRekapitulasi";
 
